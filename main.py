@@ -3,5 +3,5 @@ from fastapi import FastAPI
 app = FastAPI()
 
 @app.get("/")
-async def root():
-    return {"message":"Hello User, welcome to Qwirkart..."} 
+def root():
+    return {"message":"Hello User, welcome to Qwikart..."} 
