@@ -1,1 +1,4 @@
-04-01-2025,sid-12072246h\siddhesh shankar,"pip install fastapi[standard]",
+Date,user_id,actions,timestamp,commit
+04-01-2025,sid-12072246h\siddhesh shankar,"pip install fastapi[standard]","52:00",sucessfull,
+04-01-2025,sid-12072246h\siddhesh shankar,"Created Collection in Postman for GET,POSTS,DELETE and UPDATE Requests","59:00",sucessfull,
+04-01-2025,sid-12072246h\siddhesh shankar,"Created Body Extraction for specific data from the POST Request to add new Products","01:05:00",sucessfull,
