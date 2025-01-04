@@ -2,7 +2,7 @@ from fastapi import Body, FastAPI
 
 app = FastAPI()
 
-@app.get("/")
+@app.get("/welcomeQwikart")
 def root():
     return {"message":"Hello User, welcome to Qwikart..."} 
 
@@ -36,3 +36,13 @@ def create_products(payloadProduct : dict = Body(...)):
 
     return {"added_products": added_products}
 
+# Creating a database with tables:
+# Products: A central table having a list of products. Any new product added and deleted will be done 
+#             from here based on availability tag.
+#
+# Users: A central table having the list of users. Any new user will be added after authentication and deleted based on the dormancy 
+#         and payment selection basis.
+# 
+# Locations: Based on geaographical data. Table will be updated only when we are adding a new location to our reach.
+#
+# 
