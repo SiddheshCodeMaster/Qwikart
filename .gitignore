@@ -1,2 +1,3 @@
 # ignore ALL files in ANY directory named temp
 qwikartenv/
+/qwiKart_Central_DB_logic.txt
