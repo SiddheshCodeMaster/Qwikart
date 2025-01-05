@@ -1,10 +1,25 @@
 from fastapi import Body, FastAPI
 
+# Reading the welcome page:
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+import os
+
 app = FastAPI()
 
-@app.get("/welcomeQwikart")
+# Mount the static folder for serving static files
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+@app.get("/welcomeQwikart", response_class=HTMLResponse)
 def root():
-    return {"message":"Hello User, welcome to Qwikart..."} 
+     # Get the path of the HTML file
+    file_path = os.path.join("templates", "welcome.html")
+    
+    # Read the HTML file content
+    with open(file_path, "r") as file:
+        html_content = file.read()
+    
+    return HTMLResponse(content=html_content)
 
 @app.get("/get_all_products")
 def get_products():
