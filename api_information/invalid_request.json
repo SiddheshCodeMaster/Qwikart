@@ -1,0 +1,9 @@
+{
+    "product_name": "Coca-Cola Zero Sugar",
+    "information": {
+        "Price": "50",  
+        "Description": "Coca-Cola Zero Sugar, refreshing taste with no calories",
+        "Quantity": 150,
+        "is_available": true
+    }
+}

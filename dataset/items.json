@@ -1,337 +1,338 @@
-{"Vegan Burrito": {
+{
+    "Vegan Burrito": {
         "Price": 180,
         "Description": "Vegan Burrito: Black Beans, Rice, and Avocado",
         "Quantity": 120,
         "Category": "Food",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Portable Heater": {
         "Price": 450,
         "Description": "Portable Heater: Compact and Energy Efficient",
         "Quantity": 50,
         "Category": "Home Appliances",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Plumbing Tape": {
         "Price": 50,
         "Description": "Plumbing Tape: Durable and Leak-Proof",
         "Quantity": 200,
         "Category": "Plumbing",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Garden Hose": {
         "Price": 300,
         "Description": "Garden Hose: Flexible and Leak-Resistant",
         "Quantity": 150,
         "Category": "Gardening",
-        "is_available": "No"
+        "is_available": false
     },
     "LED Light Bulbs": {
         "Price": 120,
         "Description": "LED Light Bulbs: Energy-Saving and Long-Lasting",
         "Quantity": 100,
         "Category": "Electronics",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Smartphone Charger": {
         "Price": 60,
         "Description": "Smartphone Charger: Fast Charging Cable",
         "Quantity": 250,
         "Category": "Electronics",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Fire Extinguisher": {
         "Price": 220,
         "Description": "Fire Extinguisher: ABC Dry Chemical for Household Safety",
         "Quantity": 80,
         "Category": "Safety Equipment",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Bathroom Sink": {
         "Price": 350,
         "Description": "Bathroom Sink: Ceramic, Modern Design",
         "Quantity": 40,
         "Category": "Plumbing",
-        "is_available": "No"
+        "is_available": false
     },
     "Bluetooth Speaker": {
         "Price": 180,
         "Description": "Bluetooth Speaker: Portable and Waterproof",
         "Quantity": 120,
         "Category": "Electronics",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Emergency Flashlight": {
         "Price": 90,
         "Description": "Emergency Flashlight: Rechargeable and Durable",
         "Quantity": 200,
         "Category": "Safety Equipment",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Wrench Set": {
         "Price": 250,
         "Description": "Wrench Set: 10 Pieces, Durable Construction",
         "Quantity": 150,
         "Category": "Hardware",
-        "is_available": "No"
+        "is_available": false
     },
     "Towel Rack": {
         "Price": 120,
         "Description": "Towel Rack: Stainless Steel with Modern Finish",
         "Quantity": 180,
         "Category": "Home Appliances",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Electric Kettle": {
         "Price": 250,
         "Description": "Electric Kettle: Fast Boiling and Auto Shut-Off",
         "Quantity": 100,
         "Category": "Home Appliances",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Air Purifier": {
         "Price": 350,
         "Description": "Air Purifier: HEPA Filter, Removes Allergens",
         "Quantity": 60,
         "Category": "Home Appliances",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Pressure Washer": {
         "Price": 400,
         "Description": "Pressure Washer: High-Pressure Spray for Outdoor Cleaning",
         "Quantity": 50,
         "Category": "Gardening",
-        "is_available": "No"
+        "is_available": false
     },
     "Electric Fan": {
         "Price": 120,
         "Description": "Electric Fan: Quiet and Energy Efficient",
         "Quantity": 220,
         "Category": "Home Appliances",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Extension Cord": {
         "Price": 30,
         "Description": "Extension Cord: Heavy Duty, 15ft Length",
         "Quantity": 250,
         "Category": "Electronics",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Desk Lamp": {
         "Price": 80,
         "Description": "Desk Lamp: Adjustable LED with USB Charging Port",
         "Quantity": 200,
         "Category": "Home Appliances",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Sewing Machine": {
         "Price": 250,
         "Description": "Sewing Machine: Compact and Portable",
         "Quantity": 80,
         "Category": "Home Appliances",
-        "is_available": "No"
+        "is_available": false
     },
     "Digital Thermometer": {
         "Price": 40,
         "Description": "Digital Thermometer: Quick and Accurate Readings",
         "Quantity": 220,
         "Category": "Health Equipment",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Portable Power Bank": {
         "Price": 150,
         "Description": "Portable Power Bank: 10,000mAh for Quick Charging",
         "Quantity": 180,
         "Category": "Electronics",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Chocolate Milk": {
         "Price": 120,
         "Description": "Chocolate Milk: Rich and Creamy",
         "Quantity": 200,
         "Category": "Food",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Electric Drill": {
         "Price": 250,
         "Description": "Electric Drill: Cordless with Multiple Speed Settings",
         "Quantity": 70,
         "Category": "Hardware",
-        "is_available": "No"
+        "is_available": false
     },
     "Coconut Water": {
         "Price": 110,
         "Description": "Coconut Water: Pure and Refreshing",
         "Quantity": 150,
         "Category": "Drinks",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Peach Tea": {
         "Price": 170,
         "Description": "Peach Tea: Sweet and Fragrant",
         "Quantity": 180,
         "Category": "Drinks",
-        "is_available": "Yes"
+        "is_available": true
     },
     "WiFi Router": {
         "Price": 300,
         "Description": "WiFi Router: High-Speed with Long Range",
         "Quantity": 50,
         "Category": "Electronics",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Lemonade": {
         "Price": 120,
         "Description": "Lemonade: Freshly Squeezed with a Tangy Twist",
         "Quantity": 200,
         "Category": "Drinks",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Cordless Vacuum Cleaner": {
         "Price": 350,
         "Description": "Cordless Vacuum Cleaner: Powerful and Lightweight",
         "Quantity": 100,
         "Category": "Home Appliances",
-        "is_available": "No"
+        "is_available": false
     },
     "Vegetable Juice": {
         "Price": 150,
         "Description": "Vegetable Juice: Carrot, Beetroot & Celery Blend",
         "Quantity": 130,
         "Category": "Drinks",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Cinnamon Rolls": {
         "Price": 180,
         "Description": "Cinnamon Rolls: Soft and Sweet with a Rich Cinnamon Flavor",
         "Quantity": 100,
         "Category": "Food",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Toolbox": {
         "Price": 220,
         "Description": "Toolbox: Sturdy with Multiple Compartments",
         "Quantity": 80,
         "Category": "Hardware",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Apple Juice": {
         "Price": 130,
         "Description": "Apple Juice: Freshly Pressed with No Added Sugar",
         "Quantity": 180,
         "Category": "Drinks",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Spicy Nachos": {
         "Price": 140,
         "Description": "Spicy Nachos: Crispy with Cheddar Cheese and Jalapenos",
         "Quantity": 160,
         "Category": "Food",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Watermelon Smoothie": {
         "Price": 160,
         "Description": "Watermelon Smoothie: Refreshing and Sweet",
         "Quantity": 120,
         "Category": "Drinks",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Power Drill": {
         "Price": 270,
         "Description": "Power Drill: High Torque for Heavy-Duty Work",
         "Quantity": 60,
         "Category": "Hardware",
-        "is_available": "No"
+        "is_available": false
     },
     "Chili Sauce": {
         "Price": 110,
         "Description": "Chili Sauce: Spicy and Flavorful",
         "Quantity": 220,
         "Category": "Food",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Taco Shells": {
         "Price": 90,
         "Description": "Taco Shells: Crunchy and Perfect for Tacos",
         "Quantity": 200,
         "Category": "Food",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Mango Lassi": {
         "Price": 150,
         "Description": "Mango Lassi: Creamy and Sweet Yogurt Drink",
         "Quantity": 180,
         "Category": "Drinks",
-        "is_available": "Yes"
+        "is_available": true
     },
     "LED Flashlight": {
         "Price": 80,
         "Description": "LED Flashlight: Bright and Compact for Emergency Use",
         "Quantity": 250,
         "Category": "Electronics",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Tomato Sauce": {
         "Price": 120,
         "Description": "Tomato Sauce: Rich and Smooth, Ideal for Pasta",
         "Quantity": 220,
         "Category": "Food",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Screwdriver Set": {
         "Price": 180,
         "Description": "Screwdriver Set: 12-Piece with Ergonomic Handles",
         "Quantity": 90,
         "Category": "Hardware",
-        "is_available": "No"
+        "is_available": false
     },
     "Iced Coffee": {
         "Price": 160,
         "Description": "Iced Coffee: Smooth and Energizing with Ice",
         "Quantity": 150,
         "Category": "Drinks",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Granola": {
         "Price": 130,
         "Description": "Granola: Oats, Nuts & Honey",
         "Quantity": 200,
         "Category": "Food",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Smartwatch": {
         "Price": 350,
         "Description": "Smartwatch: Fitness Tracker and Heart Rate Monitor",
         "Quantity": 50,
         "Category": "Electronics",
-        "is_available": "No"
+        "is_available": false
     },
     "Potting Soil": {
         "Price": 100,
         "Description": "Potting Soil: Rich and Nutrient-Dense",
         "Quantity": 200,
         "Category": "Gardening",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Beef Tacos": {
         "Price": 200,
         "Description": "Beef Tacos: Ground Beef with Fresh Veggies",
         "Quantity": 150,
         "Category": "Food",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Hummus Dip": {
         "Price": 180,
         "Description": "Hummus Dip: Smooth and Creamy with Olive Oil",
         "Quantity": 120,
         "Category": "Food",
-        "is_available": "Yes"
+        "is_available": true
     },
     "Salmon Filets": {
         "Price": 350,
         "Description": "Salmon Filets: Fresh and High-Quality",
         "Quantity": 80,
         "Category": "Food",
-        "is_available": "No"
+        "is_available": false
     }
 }

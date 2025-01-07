@@ -15,6 +15,7 @@ class ProductInfo(BaseModel):
     Price: float
     Description: str
     Quantity: int
+    is_available : bool
 
 # Pydantic BaseModel for new product data
 class Product(BaseModel):
@@ -50,15 +51,24 @@ def get_products():
 
 # Endpoint to create new products
 @app.post("/createProducts")
-def create_products(new_product: Product):    
-    # Process the incoming data to store in the required structure
-    return {
-        "added_products": {
-            new_product.product_name: {
-                "Price": new_product.information.Price,
-                "Description": new_product.information.Description,
-                "Quantity": new_product.information.Quantity
-            }
-        }
+def create_products(new_product: Product):
+    # Read the existing product data
+    file_path = 'dataset/items.json'
+    with open(file_path, 'r') as file:
+        products = json.load(file)
+
+    # Add the new product to the data
+    products[new_product.product_name] = {
+        "Price": new_product.information.Price,
+        "Description": new_product.information.Description,
+        "Quantity": new_product.information.Quantity,
+        "is_available": new_product.information.is_available
     }
+
+    # Write updated data back to the file
+    with open(file_path, 'w') as file:
+        json.dump(products, file, indent=4)
+
+    return {"message": "Product added successfully!"}
+
 
