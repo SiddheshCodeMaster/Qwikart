@@ -1,11 +1,24 @@
 from fastapi import Body, FastAPI
 
+from pydantic import BaseModel
+
 # Reading the welcome page:
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 import os
 
 app = FastAPI()
+
+# Pydantic BaseModel for product information
+class ProductInfo(BaseModel):
+    Price: float
+    Description: str
+    Quantity: int
+
+# Pydantic BaseModel for new product data
+class Product(BaseModel):
+    product_name: str
+    information: ProductInfo
 
 # Mount the static folder for serving static files
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -21,6 +34,7 @@ def root():
     
     return HTMLResponse(content=html_content)
 
+# Endpoint to retrieve all products
 @app.get("/get_all_products")
 def get_products():
     return {
@@ -38,16 +52,17 @@ def get_products():
         }
     }
 
+# Endpoint to create new products
 @app.post("/createProducts")
-def create_products(payloadProduct : dict = Body(...)):
-    
+def create_products(new_product: Product):    
     # Process the incoming data to store in the required structure
-    added_products = []
-    for product_name, information in payloadProduct.items():
-        added_products.append({
-            "product_name": product_name,
-            "information": information
-        })
-
-    return {"added_products": added_products}
+    return {
+        "added_products": {
+            new_product.product_name: {
+                "Price": new_product.information.Price,
+                "Description": new_product.information.Description,
+                "Quantity": new_product.information.Quantity
+            }
+        }
+    }
 
