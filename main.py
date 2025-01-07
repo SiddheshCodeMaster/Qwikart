@@ -48,18 +48,17 @@ def get_products():
         "product_data": products
 	}
 
-
 # Endpoint to create new products
 @app.post("/createProducts")
-def create_products(payloadProduct : dict = Body(...)):
-    
+def create_products(new_product: Product):    
     # Process the incoming data to store in the required structure
-    added_products = []
-    for product_name, information in payloadProduct.items():
-        added_products.append({
-            "product_name": product_name,
-            "information": information
-        })
-
-    return {"added_products": added_products}
+    return {
+        "added_products": {
+            new_product.product_name: {
+                "Price": new_product.information.Price,
+                "Description": new_product.information.Description,
+                "Quantity": new_product.information.Quantity
+            }
+        }
+    }
 
