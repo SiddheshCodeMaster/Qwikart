@@ -1,3 +1,5 @@
+from random import randrange
+from typing import Optional
 from fastapi import Body, FastAPI
 
 from pydantic import BaseModel
@@ -16,6 +18,8 @@ class ProductInfo(BaseModel):
     Description: str
     Quantity: int
     is_available : bool
+    category : str
+    id : Optional[int]
 
 # Pydantic BaseModel for new product data
 class Product(BaseModel):
@@ -50,7 +54,7 @@ def get_products():
 	}
 
 # Endpoint to create new products
-@app.post("/createProducts")
+@app.post("/Products")
 def create_products(new_product: Product):
     # Read the existing product data
     file_path = 'dataset/items.json'
@@ -62,13 +66,14 @@ def create_products(new_product: Product):
         "Price": new_product.information.Price,
         "Description": new_product.information.Description,
         "Quantity": new_product.information.Quantity,
-        "is_available": new_product.information.is_available
+        "is_available": new_product.information.is_available,
+        "id" : randrange(0,100000)
     }
 
     # Write updated data back to the file
     with open(file_path, 'w') as file:
         json.dump(products, file, indent=4)
 
-    return {"message": "Product added successfully!"}
+    return {"data": products[new_product.product_name]}
 
 

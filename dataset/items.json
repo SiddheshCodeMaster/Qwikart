@@ -1,5 +1,6 @@
 {
     "Vegan Burrito": {
+        "id": 729845,
         "Price": 180,
         "Description": "Vegan Burrito: Black Beans, Rice, and Avocado",
         "Quantity": 120,
@@ -7,6 +8,7 @@
         "is_available": true
     },
     "Portable Heater": {
+        "id": 463820,
         "Price": 450,
         "Description": "Portable Heater: Compact and Energy Efficient",
         "Quantity": 50,
@@ -14,6 +16,7 @@
         "is_available": true
     },
     "Plumbing Tape": {
+        "id": 182754,
         "Price": 50,
         "Description": "Plumbing Tape: Durable and Leak-Proof",
         "Quantity": 200,
@@ -21,6 +24,7 @@
         "is_available": true
     },
     "Garden Hose": {
+        "id": 947382,
         "Price": 300,
         "Description": "Garden Hose: Flexible and Leak-Resistant",
         "Quantity": 150,
@@ -28,6 +32,7 @@
         "is_available": false
     },
     "LED Light Bulbs": {
+        "id": 521834,
         "Price": 120,
         "Description": "LED Light Bulbs: Energy-Saving and Long-Lasting",
         "Quantity": 100,
@@ -35,6 +40,7 @@
         "is_available": true
     },
     "Smartphone Charger": {
+        "id": 382417,
         "Price": 60,
         "Description": "Smartphone Charger: Fast Charging Cable",
         "Quantity": 250,
@@ -42,6 +48,7 @@
         "is_available": true
     },
     "Fire Extinguisher": {
+        "id": 794563,
         "Price": 220,
         "Description": "Fire Extinguisher: ABC Dry Chemical for Household Safety",
         "Quantity": 80,
@@ -49,6 +56,7 @@
         "is_available": true
     },
     "Bathroom Sink": {
+        "id": 815647,
         "Price": 350,
         "Description": "Bathroom Sink: Ceramic, Modern Design",
         "Quantity": 40,
@@ -56,6 +64,7 @@
         "is_available": false
     },
     "Bluetooth Speaker": {
+        "id": 943671,
         "Price": 180,
         "Description": "Bluetooth Speaker: Portable and Waterproof",
         "Quantity": 120,
@@ -63,6 +72,7 @@
         "is_available": true
     },
     "Emergency Flashlight": {
+        "id": 631457,
         "Price": 90,
         "Description": "Emergency Flashlight: Rechargeable and Durable",
         "Quantity": 200,
@@ -70,6 +80,7 @@
         "is_available": true
     },
     "Wrench Set": {
+        "id": 394621,
         "Price": 250,
         "Description": "Wrench Set: 10 Pieces, Durable Construction",
         "Quantity": 150,
@@ -77,6 +88,7 @@
         "is_available": false
     },
     "Towel Rack": {
+        "id": 581324,
         "Price": 120,
         "Description": "Towel Rack: Stainless Steel with Modern Finish",
         "Quantity": 180,
@@ -84,6 +96,7 @@
         "is_available": true
     },
     "Electric Kettle": {
+        "id": 823574,
         "Price": 250,
         "Description": "Electric Kettle: Fast Boiling and Auto Shut-Off",
         "Quantity": 100,
@@ -91,6 +104,7 @@
         "is_available": true
     },
     "Air Purifier": {
+        "id": 762841,
         "Price": 350,
         "Description": "Air Purifier: HEPA Filter, Removes Allergens",
         "Quantity": 60,
@@ -98,6 +112,7 @@
         "is_available": true
     },
     "Pressure Washer": {
+        "id": 915623,
         "Price": 400,
         "Description": "Pressure Washer: High-Pressure Spray for Outdoor Cleaning",
         "Quantity": 50,
@@ -105,6 +120,7 @@
         "is_available": false
     },
     "Electric Fan": {
+        "id": 284159,
         "Price": 120,
         "Description": "Electric Fan: Quiet and Energy Efficient",
         "Quantity": 220,
@@ -112,6 +128,7 @@
         "is_available": true
     },
     "Extension Cord": {
+        "id": 346187,
         "Price": 30,
         "Description": "Extension Cord: Heavy Duty, 15ft Length",
         "Quantity": 250,
@@ -119,6 +136,7 @@
         "is_available": true
     },
     "Desk Lamp": {
+        "id": 612348,
         "Price": 80,
         "Description": "Desk Lamp: Adjustable LED with USB Charging Port",
         "Quantity": 200,
@@ -126,6 +144,7 @@
         "is_available": true
     },
     "Sewing Machine": {
+        "id": 894325,
         "Price": 250,
         "Description": "Sewing Machine: Compact and Portable",
         "Quantity": 80,
@@ -133,6 +152,7 @@
         "is_available": false
     },
     "Digital Thermometer": {
+        "id": 451893,
         "Price": 40,
         "Description": "Digital Thermometer: Quick and Accurate Readings",
         "Quantity": 220,
@@ -140,6 +160,7 @@
         "is_available": true
     },
     "Portable Power Bank": {
+        "id": 743218,
         "Price": 150,
         "Description": "Portable Power Bank: 10,000mAh for Quick Charging",
         "Quantity": 180,
@@ -147,6 +168,7 @@
         "is_available": true
     },
     "Chocolate Milk": {
+        "id": 189453,
         "Price": 120,
         "Description": "Chocolate Milk: Rich and Creamy",
         "Quantity": 200,
@@ -154,6 +176,7 @@
         "is_available": true
     },
     "Electric Drill": {
+        "id": 512847,
         "Price": 250,
         "Description": "Electric Drill: Cordless with Multiple Speed Settings",
         "Quantity": 70,
@@ -161,6 +184,7 @@
         "is_available": false
     },
     "Coconut Water": {
+        "id": 428973,
         "Price": 110,
         "Description": "Coconut Water: Pure and Refreshing",
         "Quantity": 150,
@@ -168,6 +192,7 @@
         "is_available": true
     },
     "Peach Tea": {
+        "id": 782394,
         "Price": 170,
         "Description": "Peach Tea: Sweet and Fragrant",
         "Quantity": 180,
@@ -175,6 +200,7 @@
         "is_available": true
     },
     "WiFi Router": {
+        "id": 974836,
         "Price": 300,
         "Description": "WiFi Router: High-Speed with Long Range",
         "Quantity": 50,
@@ -182,6 +208,7 @@
         "is_available": true
     },
     "Lemonade": {
+        "id": 359427,
         "Price": 120,
         "Description": "Lemonade: Freshly Squeezed with a Tangy Twist",
         "Quantity": 200,
@@ -189,6 +216,7 @@
         "is_available": true
     },
     "Cordless Vacuum Cleaner": {
+        "id": 981436,
         "Price": 350,
         "Description": "Cordless Vacuum Cleaner: Powerful and Lightweight",
         "Quantity": 100,
@@ -196,6 +224,7 @@
         "is_available": false
     },
     "Vegetable Juice": {
+        "id": 471893,
         "Price": 150,
         "Description": "Vegetable Juice: Carrot, Beetroot & Celery Blend",
         "Quantity": 130,
@@ -203,6 +232,7 @@
         "is_available": true
     },
     "Cinnamon Rolls": {
+        "id": 219845,
         "Price": 180,
         "Description": "Cinnamon Rolls: Soft and Sweet with a Rich Cinnamon Flavor",
         "Quantity": 100,
@@ -210,6 +240,7 @@
         "is_available": true
     },
     "Toolbox": {
+        "id": 783159,
         "Price": 220,
         "Description": "Toolbox: Sturdy with Multiple Compartments",
         "Quantity": 80,
@@ -217,6 +248,7 @@
         "is_available": true
     },
     "Apple Juice": {
+        "id": 469812,
         "Price": 130,
         "Description": "Apple Juice: Freshly Pressed with No Added Sugar",
         "Quantity": 180,
@@ -224,6 +256,7 @@
         "is_available": true
     },
     "Spicy Nachos": {
+        "id": 684231,
         "Price": 140,
         "Description": "Spicy Nachos: Crispy with Cheddar Cheese and Jalapenos",
         "Quantity": 160,
@@ -231,6 +264,7 @@
         "is_available": true
     },
     "Watermelon Smoothie": {
+        "id": 521894,
         "Price": 160,
         "Description": "Watermelon Smoothie: Refreshing and Sweet",
         "Quantity": 120,
@@ -238,6 +272,7 @@
         "is_available": true
     },
     "Power Drill": {
+        "id": 983124,
         "Price": 270,
         "Description": "Power Drill: High Torque for Heavy-Duty Work",
         "Quantity": 60,
@@ -245,6 +280,7 @@
         "is_available": false
     },
     "Chili Sauce": {
+        "id": 482365,
         "Price": 110,
         "Description": "Chili Sauce: Spicy and Flavorful",
         "Quantity": 220,
@@ -252,6 +288,7 @@
         "is_available": true
     },
     "Taco Shells": {
+        "id": 128643,
         "Price": 90,
         "Description": "Taco Shells: Crunchy and Perfect for Tacos",
         "Quantity": 200,
@@ -259,6 +296,7 @@
         "is_available": true
     },
     "Mango Lassi": {
+        "id": 641237,
         "Price": 150,
         "Description": "Mango Lassi: Creamy and Sweet Yogurt Drink",
         "Quantity": 180,
@@ -266,6 +304,7 @@
         "is_available": true
     },
     "LED Flashlight": {
+        "id": 915783,
         "Price": 80,
         "Description": "LED Flashlight: Bright and Compact for Emergency Use",
         "Quantity": 250,
@@ -273,6 +312,7 @@
         "is_available": true
     },
     "Tomato Sauce": {
+        "id": 432987,
         "Price": 120,
         "Description": "Tomato Sauce: Rich and Smooth, Ideal for Pasta",
         "Quantity": 220,
@@ -280,6 +320,7 @@
         "is_available": true
     },
     "Screwdriver Set": {
+        "id": 783294,
         "Price": 180,
         "Description": "Screwdriver Set: 12-Piece with Ergonomic Handles",
         "Quantity": 90,
@@ -287,6 +328,7 @@
         "is_available": false
     },
     "Iced Coffee": {
+        "id": 198734,
         "Price": 160,
         "Description": "Iced Coffee: Smooth and Energizing with Ice",
         "Quantity": 150,
@@ -294,6 +336,7 @@
         "is_available": true
     },
     "Granola": {
+        "id": 649137,
         "Price": 130,
         "Description": "Granola: Oats, Nuts & Honey",
         "Quantity": 200,
@@ -301,6 +344,7 @@
         "is_available": true
     },
     "Smartwatch": {
+        "id": 493821,
         "Price": 350,
         "Description": "Smartwatch: Fitness Tracker and Heart Rate Monitor",
         "Quantity": 50,
@@ -308,6 +352,7 @@
         "is_available": false
     },
     "Potting Soil": {
+        "id": 847519,
         "Price": 100,
         "Description": "Potting Soil: Rich and Nutrient-Dense",
         "Quantity": 200,
@@ -315,6 +360,7 @@
         "is_available": true
     },
     "Beef Tacos": {
+        "id": 371842,
         "Price": 200,
         "Description": "Beef Tacos: Ground Beef with Fresh Veggies",
         "Quantity": 150,
@@ -322,6 +368,7 @@
         "is_available": true
     },
     "Hummus Dip": {
+        "id": 482613,
         "Price": 180,
         "Description": "Hummus Dip: Smooth and Creamy with Olive Oil",
         "Quantity": 120,
@@ -329,10 +376,66 @@
         "is_available": true
     },
     "Salmon Filets": {
-        "Price": 350,
-        "Description": "Salmon Filets: Fresh and High-Quality",
+        "id": 781923,
+        "Price": 300,
+        "Description": "Salmon Filets: Fresh and Boneless, Ready to Cook",
         "Quantity": 80,
         "Category": "Food",
         "is_available": false
+    },
+    "Carpet Cleaner": {
+        "id": 912634,
+        "Price": 450,
+        "Description": "Carpet Cleaner: Removes Deep Stains and Odors",
+        "Quantity": 40,
+        "Category": "Home Appliances",
+        "is_available": true
+    },
+    "Hot Chocolate": {
+        "id": 564789,
+        "Price": 140,
+        "Description": "Hot Chocolate: Creamy and Indulgent with Marshmallows",
+        "Quantity": 180,
+        "Category": "Drinks",
+        "is_available": true
+    },
+    "Tea Bags": {
+        "id": 291487,
+        "Price": 50,
+        "Description": "Tea Bags: Black Tea with Rich Aroma",
+        "Quantity": 300,
+        "Category": "Drinks",
+        "is_available": true
+    },
+    "Air Conditioner": {
+        "id": 741982,
+        "Price": 750,
+        "Description": "Air Conditioner: Split-Type with Remote Control",
+        "Quantity": 20,
+        "Category": "Home Appliances",
+        "is_available": false
+    },
+    "Frozen Pizza": {
+        "id": 982315,
+        "Price": 180,
+        "Description": "Frozen Pizza: Cheesy with Pepperoni",
+        "Quantity": 100,
+        "Category": "Food",
+        "is_available": true
+    },
+    "Lawnmower": {
+        "id": 513827,
+        "Price": 250,
+        "Description": "Lawnmower: Compact with Adjustable Height",
+        "Quantity": 25,
+        "Category": "Gardening",
+        "is_available": true
+    },
+    "Chiquato Mexican Sauce": {
+        "Price": 320.0,
+        "Description": "Chiquato Mexican Sauce: Viva La Vida !",
+        "Quantity": 15,
+        "is_available": true,
+        "id": 75076
     }
 }
