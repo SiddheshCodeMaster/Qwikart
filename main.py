@@ -23,12 +23,12 @@ class Product(BaseModel):
     information: ProductInfo
 
 # Mount the static folder for serving static files
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/dynamic", StaticFiles(directory="dynamic"), name="dynamic")
 
 @app.get("/welcomeQwikart", response_class=HTMLResponse)
 def root():
      # Get the path of the HTML file
-    file_path = os.path.join("templates", "welcome.html")
+    file_path = os.path.join("dynamic/templates", "welcome.html")
     
     # Read the HTML file content
     with open(file_path, "r") as file:
