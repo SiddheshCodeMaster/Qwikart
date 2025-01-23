@@ -53,6 +53,37 @@ def get_products():
         "product_data": products
 	}
 
+# Endpoint to retrieve the product (on product id basis)
+@app.get("/Products/{id}")
+def get_product(id: int):
+    """
+    Retrieve a product by its ID from the dataset.
+
+    Args:
+        id (int): The ID of the product to retrieve.
+
+    Returns:
+        dict: A dictionary with the format {"product_detail": product}, or an error message if not found.
+    """
+    # Load the product data from the JSON file
+    file_path = 'dataset/items.json'
+    try:
+        with open(file_path, 'r') as file:
+            products = json.load(file)
+        
+        # Search for the product with the given ID
+        for product_name, product_details in products.items():
+            if product_details.get("id") == id:
+                return {"product_detail": {product_name: product_details}}
+        
+        # Return an error message if the product is not found
+        return {"error": f"Product with ID {id} not found."}
+    
+    except FileNotFoundError:
+        return {"error": "Product dataset file not found."}
+    except json.JSONDecodeError:
+        return {"error": "Invalid JSON format in the product dataset."}
+
 # Endpoint to create new products
 @app.post("/Products")
 def create_products(new_product: Product):
