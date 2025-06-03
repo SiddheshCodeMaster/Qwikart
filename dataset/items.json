@@ -437,5 +437,12 @@
         "Quantity": 15,
         "is_available": true,
         "id": 75076
+    },
+    "Parle G : Dark Choclate": {
+        "Price": 20.0,
+        "Description": "Parle G : Dark Choclate Biscuits. Desh Ka Biscuit",
+        "Quantity": 11221,
+        "is_available": true,
+        "id": 87304
     }
 }
