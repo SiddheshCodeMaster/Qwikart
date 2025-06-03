@@ -120,6 +120,7 @@ def create_products(new_product: Product):
         "Price": new_product.information.Price,
         "Description": new_product.information.Description,
         "Quantity": new_product.information.Quantity,
+        "Category": new_product.information.category,
         "is_available": new_product.information.is_available,
         "id" : randrange(0,100000)
     }

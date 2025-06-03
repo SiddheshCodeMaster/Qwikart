@@ -435,6 +435,7 @@
         "Price": 320.0,
         "Description": "Chiquato Mexican Sauce: Viva La Vida !",
         "Quantity": 15,
+        "Category": "Food",
         "is_available": true,
         "id": 75076
     },
@@ -442,7 +443,16 @@
         "Price": 20.0,
         "Description": "Parle G : Dark Choclate Biscuits. Desh Ka Biscuit",
         "Quantity": 11221,
+        "Category": "Food",
         "is_available": true,
         "id": 87304
+    },
+    "Parle G : Oats and Cereal": {
+        "Price": 20.0,
+        "Description": "Parle G : Oats and Cereal Biscuits. Desh Ka Biscuit",
+        "Quantity": 11221,
+        "Category": "Food",
+        "is_available": true,
+        "id": 61627
     }
 }
