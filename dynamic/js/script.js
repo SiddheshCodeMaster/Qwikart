@@ -1,3 +1,7 @@
+const searchInput = document.getElementById('searchInput');
+const container = document.getElementById('productsContainer');
+let allProducts = [];
+
 // Dynamic Text and Quotes Arrays
 const phrases = [
     "The world of amazing deals!",
@@ -40,3 +44,36 @@ setInterval(changeQuote, 5000);  // Change quote every 5 seconds
 // Initialize First Values
 changePhrase();
 changeQuote();
+
+// Fetch all products on load
+fetch('/get_all_products')
+  .then(response => response.json())
+  .then(data => {
+    allProducts = Object.entries(data.product_data); // [[productName, productInfo], ...]
+    renderProducts(allProducts);
+  });
+
+function renderProducts(products) {
+  container.innerHTML = ''; // Clear existing
+  products.forEach(([name, info]) => {
+    const card = document.createElement('div');
+    card.classList.add('product-card');
+    card.innerHTML = `
+      <h3>${name}</h3>
+      <p><strong>Price:</strong> ₹${info.Price}</p>
+      <p><strong>Category:</strong> ${info.Category}</p>
+      <p>${info.Description}</p>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// Filter on input
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.toLowerCase();
+  const filtered = allProducts.filter(([name, info]) => 
+    name.toLowerCase().includes(query) ||
+    info.Description.toLowerCase().includes(query)
+  );
+  renderProducts(filtered);
+});
