@@ -113,3 +113,11 @@ def create_products(new_product: Product):
         json.dump(app.state.products, file, indent=4)
 
     return {"data": product_data}
+
+@app.get("/explore", response_class=HTMLResponse)
+def explore():
+    file_path = os.path.join("dynamic/templates", "explore.html")
+    with open(file_path, "r") as file:
+        html_content = file.read()
+    return HTMLResponse(content=html_content)
+

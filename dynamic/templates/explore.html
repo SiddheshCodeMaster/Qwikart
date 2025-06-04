@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Explore Products - QwiKart</title>
+    <link rel="stylesheet" href="/dynamic/css/style.css">
+</head>
+<body>
+    <h1>Explore Our Products</h1>
+
+    <div class="products-container" id="productsContainer"></div>
+
+    <script>
+        async function fetchProducts() {
+            try {
+                const response = await fetch('/get_all_products');
+                const data = await response.json();
+                const container = document.getElementById('productsContainer');
+
+                for (const [name, details] of Object.entries(data.product_data)) {
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+
+                    card.innerHTML = `
+                        <h3>${name}</h3>
+                        <p><strong>Price:</strong> Rs.${details.Price}</p>
+                        <p><strong>Description:</strong> ${details.Description}</p>
+                        <p><strong>Category:</strong> ${details.Category}</p>
+                        <p><strong>Available:</strong> ${details.is_available ? "Yes" : "No"}</p>
+                        <p><strong>Quantity:</strong> ${details.Quantity}</p>
+                    `;
+
+                    container.appendChild(card);
+                }
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            }
+        }
+
+        fetchProducts();
+    </script>
+</body>
+</html>
