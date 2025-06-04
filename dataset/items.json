@@ -311,14 +311,6 @@
         "Category": "Electronics",
         "is_available": true
     },
-    "Tomato Sauce": {
-        "id": 432987,
-        "Price": 120,
-        "Description": "Tomato Sauce: Rich and Smooth, Ideal for Pasta",
-        "Quantity": 220,
-        "Category": "Food",
-        "is_available": true
-    },
     "Screwdriver Set": {
         "id": 783294,
         "Price": 180,
@@ -327,14 +319,6 @@
         "Category": "Hardware",
         "is_available": false
     },
-    "Iced Coffee": {
-        "id": 198734,
-        "Price": 160,
-        "Description": "Iced Coffee: Smooth and Energizing with Ice",
-        "Quantity": 150,
-        "Category": "Drinks",
-        "is_available": true
-    },
     "Granola": {
         "id": 649137,
         "Price": 130,
@@ -342,14 +326,6 @@
         "Quantity": 200,
         "Category": "Food",
         "is_available": true
-    },
-    "Smartwatch": {
-        "id": 493821,
-        "Price": 350,
-        "Description": "Smartwatch: Fitness Tracker and Heart Rate Monitor",
-        "Quantity": 50,
-        "Category": "Electronics",
-        "is_available": false
     },
     "Potting Soil": {
         "id": 847519,
@@ -438,14 +414,6 @@
         "Category": "Food",
         "is_available": true,
         "id": 75076
-    },
-    "Parle G : Dark Choclate": {
-        "Price": 20.0,
-        "Description": "Parle G : Dark Choclate Biscuits. Desh Ka Biscuit",
-        "Quantity": 11221,
-        "Category": "Food",
-        "is_available": true,
-        "id": 87304
     },
     "Parle G : Oats and Cereal": {
         "Price": 20.0,

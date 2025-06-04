@@ -1,6 +1,6 @@
 from random import randrange
 from typing import Optional
-from fastapi import Body, FastAPI, Query
+from fastapi import Body, FastAPI, Query, Response, status
 from contextlib import asynccontextmanager
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -93,7 +93,7 @@ def get_product(id: int):
 # -----------------------------
 # Create a new product
 # -----------------------------
-@app.post("/Products")
+@app.post("/Products",status_code=status.HTTP_201_CREATED)
 def create_products(new_product: Product):
     new_id = randrange(0, 100000)
     product_data = {
@@ -121,3 +121,19 @@ def explore():
         html_content = file.read()
     return HTMLResponse(content=html_content)
 
+# -----------------------------
+# Delete a product
+# -----------------------------
+@app.delete("/Products/{id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_product(id: int):
+    for product_name, product_details in list(app.state.products.items()):
+        if product_details.get("id") == id:
+            del app.state.products[product_name]
+            # Persist to JSON file
+            with open('dataset/items.json', 'w') as file:
+                json.dump(app.state.products, file, indent=4)
+            return Response(status_code=status.HTTP_204_NO_CONTENT)
+    return JSONResponse(
+        status_code=status.HTTP_404_NOT_FOUND,
+        content={"message": f"Product with ID {id} not found."}
+    )
