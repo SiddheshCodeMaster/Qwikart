@@ -1,13 +1,28 @@
 from random import randrange
 from typing import Optional
 from fastapi import Body, FastAPI, Query
+from contextlib import asynccontextmanager
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import os
 import json
+    
+# -----------------------------
+# Load products JSON once at startup
+# -----------------------------
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup: Load products
+    file_path = 'dataset/items.json'
+    try:
+        with open(file_path, 'r') as file:
+            app.state.products = json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        app.state.products = {}
+    yield 
 
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)    
 
 # -----------------------------
 # Define data models using Pydantic
@@ -28,18 +43,6 @@ class Product(BaseModel):
 # Mount static folder for HTML rendering
 # -----------------------------
 app.mount("/dynamic", StaticFiles(directory="dynamic"), name="dynamic")
-
-# -----------------------------
-# Load products JSON once at startup
-# -----------------------------
-@app.on_event("startup")
-def load_products():
-    file_path = 'dataset/items.json'
-    try:
-        with open(file_path, 'r') as file:
-            app.state.products = json.load(file)
-    except (FileNotFoundError, json.JSONDecodeError):
-        app.state.products = {}
 
 # -----------------------------
 # Welcome page endpoint
