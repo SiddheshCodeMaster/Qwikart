@@ -320,12 +320,12 @@
         "is_available": false
     },
     "Granola": {
-        "id": 649137,
-        "Price": 130,
+        "Price": 150.0,
         "Description": "Granola: Oats, Nuts & Honey",
-        "Quantity": 200,
+        "Quantity": 11221,
         "Category": "Food",
-        "is_available": true
+        "is_available": true,
+        "id": 649137
     },
     "Potting Soil": {
         "id": 847519,

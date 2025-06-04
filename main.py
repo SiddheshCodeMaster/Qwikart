@@ -90,6 +90,11 @@ def get_product(id: int):
             return {"product_detail": {product_name: product_details}}
     return {"error": f"Product with ID {id} not found."}
 
+
+# -----------------------------
+# The Admin activities:
+# ------------------------------
+
 # -----------------------------
 # Create a new product
 # -----------------------------
@@ -133,6 +138,35 @@ def delete_product(id: int):
             with open('dataset/items.json', 'w') as file:
                 json.dump(app.state.products, file, indent=4)
             return Response(status_code=status.HTTP_204_NO_CONTENT)
+    return JSONResponse(
+        status_code=status.HTTP_404_NOT_FOUND,
+        content={"message": f"Product with ID {id} not found."}
+    )
+
+# -----------------------------
+# Update a product
+# -----------------------------
+
+@app.put("/Products/{id}", status_code=status.HTTP_200_OK)
+def update_product(id: int, updated_product: Product):
+    for product_name, product_details in app.state.products.items():
+        if product_details.get("id") == id:
+            updated_data = {
+                "Price": updated_product.information.Price,
+                "Description": updated_product.information.Description,
+                "Quantity": updated_product.information.Quantity,
+                "Category": updated_product.information.category,
+                "is_available": updated_product.information.is_available,
+                "id": id
+            }
+            app.state.products[product_name] = updated_data
+            
+            # Persist to JSON file
+            with open('dataset/items.json', 'w') as file:
+                json.dump(app.state.products, file, indent=4)
+                
+            return {"data": updated_data}
+    
     return JSONResponse(
         status_code=status.HTTP_404_NOT_FOUND,
         content={"message": f"Product with ID {id} not found."}
