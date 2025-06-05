@@ -12,10 +12,10 @@ const phrases = [
 
 const quotes = [
     "Success is 100% fulfillment delivered on time.",
-    "Just-In-Time is not a principle; it’s our promise.",
-    "Fast, reliable, and always on time—that’s QwiKart!",
+    "Just-In-Time is not a principle; it's our promise.",
+    "Fast, reliable, and always on time—that's QwiKart!",
     "Every second saved is a smile earned.",
-    "Fulfillment isn’t a goal; it’s a guarantee."
+    "Fulfillment isn't a goal; it's a guarantee."
 ];
 
 // DOM Elements
@@ -60,9 +60,16 @@ function renderProducts(products) {
     card.classList.add('product-card');
     card.innerHTML = `
       <h3>${name}</h3>
-      <p><strong>Price:</strong> ₹${info.Price}</p>
+      <p><strong>Price:</strong> Rs.${info.Price}</p>
       <p><strong>Category:</strong> ${info.Category}</p>
       <p>${info.Description}</p>
+      <p>
+        ${
+          info.Quantity > 0
+            ? `<strong>In Stock</strong>`
+            : '<strong style="color: red;">Out of Stock</strong>'
+        }
+      </p>
     `;
     container.appendChild(card);
   });
@@ -70,10 +77,11 @@ function renderProducts(products) {
 
 // Filter on input
 searchInput.addEventListener('input', () => {
+  console.log('Entered Searching')
   const query = searchInput.value.toLowerCase();
-  const filtered = allProducts.filter(([name, info]) => 
+  const filtered = allProducts.filter(([name, info]) =>
     name.toLowerCase().includes(query) ||
-    info.Description.toLowerCase().includes(query)
+    (info.Description && info.Description.toLowerCase().includes(query))
   );
   renderProducts(filtered);
 });

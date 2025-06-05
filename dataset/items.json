@@ -3,7 +3,7 @@
         "id": 729845,
         "Price": 180,
         "Description": "Vegan Burrito: Black Beans, Rice, and Avocado",
-        "Quantity": 120,
+        "Quantity": 0,
         "Category": "Food",
         "is_available": true
     },
@@ -315,7 +315,7 @@
         "id": 783294,
         "Price": 180,
         "Description": "Screwdriver Set: 12-Piece with Ergonomic Handles",
-        "Quantity": 90,
+        "Quantity": 0,
         "Category": "Hardware",
         "is_available": false
     },

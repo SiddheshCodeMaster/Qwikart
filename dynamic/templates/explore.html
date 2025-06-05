@@ -29,8 +29,13 @@
                         <p><strong>Price:</strong> Rs.${details.Price}</p>
                         <p><strong>Description:</strong> ${details.Description}</p>
                         <p><strong>Category:</strong> ${details.Category}</p>
-                        <p><strong>Available:</strong> ${details.is_available ? "Yes" : "No"}</p>
-                        <p><strong>Quantity:</strong> ${details.Quantity}</p>
+                        <p><strong>Quantity: ${
+                                details.Quantity > 0
+                                    ? `<strong>In Stock</strong>`
+                                    : '<strong style="color: red;">Out of Stock</strong>'
+                                }
+                        </strong>
+                        </p>
                     `;
 
                     container.appendChild(card);
