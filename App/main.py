@@ -34,8 +34,10 @@ async def consultation_form(request: Request):
 @app.post("/submit-consultation", status_code=status.HTTP_201_CREATED)
 async def submit_consultation(request: Request):
     data = await request.json()
+    new_id = randrange(0, 100000)
     entry = {
-        "NAME": data.get("name"),
+        "id": new_id,
+        "FULL NAME": data.get("name"),
         "PHONE NUMBER": data.get("phone"),
         "EMAIL": data.get("email")
     }
