@@ -80,6 +80,59 @@ body {
 /* Product Grid Page (explore.html) */
 /* ------------------------------- */
 
+/* Modern Search UI from Uiverse.io by LightAndy1 */
+.group {
+    display: flex;
+    line-height: 28px;
+    align-items: center;
+    position: relative;
+    max-width: 320px;
+    margin: 30px auto 0 auto;
+}
+
+.input {
+    font-family: "Montserrat", Arial, sans-serif;
+    width: 100%;
+    height: 45px;
+    padding-left: 2.5rem;
+    box-shadow: 0 0 0 1.5px #2b2c37, 0 0 25px -17px #000;
+    border: 0;
+    border-radius: 12px;
+    background-color: #16171d;
+    outline: none;
+    color: #bdbecb;
+    transition: all 0.25s cubic-bezier(0.19, 1, 0.22, 1);
+    cursor: text;
+    z-index: 0;
+    font-size: 1em;
+}
+
+.input::placeholder {
+    color: #bdbecb;
+}
+
+.input:hover {
+    box-shadow: 0 0 0 2.5px #2f303d, 0px 0px 25px -15px #000;
+}
+
+.input:active {
+    transform: scale(0.95);
+}
+
+.input:focus {
+    box-shadow: 0 0 0 2.5px #2f303d;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    fill: #bdbecb;
+    width: 1rem;
+    height: 1rem;
+    pointer-events: none;
+    z-index: 1;
+}
+
 /* Container for product cards */
 .products-container {
     display: grid;
@@ -109,50 +162,7 @@ body {
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #1E90FF, #87CEFA);
-    color: #ffffff;
-    min-height: 100vh;
-}
-
-.search-bar {
-    width: 60%;
-    max-width: 500px;
-    padding: 12px 20px;
-    margin: 30px auto;
-    display: block;
-    font-size: 1em;
-    border: none;
-    border-radius: 25px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    outline: none;
-}
-.search-bar:focus {
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
-
-
 h1 {
     text-align: center;
     margin-top: 20px;
-}
-
-.products-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 40px;
-    max-width: 1200px;
-    margin: auto;
-}
-
-.product-card {
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    color: black;
 }
