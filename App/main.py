@@ -23,14 +23,52 @@ async def lifespan(app: FastAPI):
         app.state.products = {}
     yield 
 
-app = FastAPI(lifespan=lifespan)   
+# -----------------------------
+# Define data models using Pydantic
+# -----------------------------
+class ProductInfo(BaseModel):
+    Price: float
+    Description: str
+    Quantity: int
+    is_available: bool
+    category: str
+    id: Optional[int]
 
+class Product(BaseModel):
+    product_name: str
+    information: ProductInfo
+
+# -----------------------------
+# Static & Template Setup
+# -----------------------------
+app = FastAPI(lifespan=lifespan)
 templates = Jinja2Templates(directory="dynamic/templates")
+app.mount("/dynamic", StaticFiles(directory="dynamic"), name="dynamic")
+
+# -----------------------------
+# Page Endpoints
+# -----------------------------
+@app.get("/welcomeQwikart", response_class=HTMLResponse)
+def root():
+    file_path = os.path.join("dynamic/templates", "welcome.html")
+    with open(file_path, "r") as file:
+        html_content = file.read()
+    return HTMLResponse(content=html_content)
+
+@app.get("/explore", response_class=HTMLResponse)
+def explore():
+    file_path = os.path.join("dynamic/templates", "explore.html")
+    with open(file_path, "r") as file:
+        html_content = file.read()
+    return HTMLResponse(content=html_content)
 
 @app.get("/consultation-form", response_class=HTMLResponse)
 async def consultation_form(request: Request):
     return templates.TemplateResponse("consultation-form.html", {"request": request})
 
+# -----------------------------
+# Consultation Form Submission
+# -----------------------------
 @app.post("/submit-consultation", status_code=status.HTTP_201_CREATED)
 async def submit_consultation(request: Request):
     data = await request.json()
@@ -58,45 +96,12 @@ async def submit_consultation(request: Request):
     return JSONResponse(content={"message": "Consultation submitted successfully"})
 
 # -----------------------------
-# Define data models using Pydantic
-# -----------------------------
-class ProductInfo(BaseModel):
-    Price: float
-    Description: str
-    Quantity: int
-    is_available: bool
-    category: str
-    id: Optional[int]
-
-class Product(BaseModel):
-    product_name: str
-    information: ProductInfo
-
-# -----------------------------
-# Mount static folder for HTML rendering
-# -----------------------------
-app.mount("/dynamic", StaticFiles(directory="dynamic"), name="dynamic")
-
-# -----------------------------
-# Welcome page endpoint
-# -----------------------------
-@app.get("/welcomeQwikart", response_class=HTMLResponse)
-def root():
-    file_path = os.path.join("dynamic/templates", "welcome.html")
-    with open(file_path, "r") as file:
-        html_content = file.read()
-    return HTMLResponse(content=html_content)
-
-# -----------------------------
-# Get all products
+# Product Endpoints (User)
 # -----------------------------
 @app.get("/get_all_products")
 def get_products():
     return {"product_data": app.state.products}
 
-# -----------------------------
-# Get products by category
-# -----------------------------
 @app.get("/Products")
 async def get_products_by_category(category: str = Query(..., description="Category to filter by")):
     data = app.state.products
@@ -104,18 +109,13 @@ async def get_products_by_category(category: str = Query(..., description="Categ
         name: details for name, details in data.items()
         if details.get("Category", "").lower() == category.lower()
     }
-
     if not filtered_products:
         return JSONResponse(
             status_code=404,
             content={"message": f"No products found in category: {category}"}
         )
-    
     return {"products": filtered_products}
 
-# -----------------------------
-# Get product by ID
-# -----------------------------
 @app.get("/Products/{id}")
 def get_product(id: int):
     for product_name, product_details in app.state.products.items():
@@ -123,15 +123,10 @@ def get_product(id: int):
             return {"product_detail": {product_name: product_details}}
     return {"error": f"Product with ID {id} not found."}
 
-
 # -----------------------------
-# The Admin activities:
-# ------------------------------
-
+# Product Endpoints (Admin)
 # -----------------------------
-# Create a new product
-# -----------------------------
-@app.post("/Products",status_code=status.HTTP_201_CREATED)
+@app.post("/Products", status_code=status.HTTP_201_CREATED)
 def create_products(new_product: Product):
     new_id = randrange(0, 100000)
     product_data = {
@@ -142,43 +137,10 @@ def create_products(new_product: Product):
         "is_available": new_product.information.is_available,
         "id": new_id
     }
-
-    # Update in-memory products
     app.state.products[new_product.product_name] = product_data
-
-    # Persist to JSON file
     with open('dataset/items.json', 'w') as file:
         json.dump(app.state.products, file, indent=4)
-
     return {"data": product_data}
-
-@app.get("/explore", response_class=HTMLResponse)
-def explore():
-    file_path = os.path.join("dynamic/templates", "explore.html")
-    with open(file_path, "r") as file:
-        html_content = file.read()
-    return HTMLResponse(content=html_content)
-
-# -----------------------------
-# Delete a product
-# -----------------------------
-@app.delete("/Products/{id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_product(id: int):
-    for product_name, product_details in list(app.state.products.items()):
-        if product_details.get("id") == id:
-            del app.state.products[product_name]
-            # Persist to JSON file
-            with open('dataset/items.json', 'w') as file:
-                json.dump(app.state.products, file, indent=4)
-            return Response(status_code=status.HTTP_204_NO_CONTENT)
-    return JSONResponse(
-        status_code=status.HTTP_404_NOT_FOUND,
-        content={"message": f"Product with ID {id} not found."}
-    )
-
-# -----------------------------
-# Update a product
-# -----------------------------
 
 @app.put("/Products/{id}", status_code=status.HTTP_200_OK)
 def update_product(id: int, updated_product: Product):
@@ -193,13 +155,22 @@ def update_product(id: int, updated_product: Product):
                 "id": id
             }
             app.state.products[product_name] = updated_data
-            
-            # Persist to JSON file
             with open('dataset/items.json', 'w') as file:
                 json.dump(app.state.products, file, indent=4)
-                
             return {"data": updated_data}
-    
+    return JSONResponse(
+        status_code=status.HTTP_404_NOT_FOUND,
+        content={"message": f"Product with ID {id} not found."}
+    )
+
+@app.delete("/Products/{id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_product(id: int):
+    for product_name, product_details in list(app.state.products.items()):
+        if product_details.get("id") == id:
+            del app.state.products[product_name]
+            with open('dataset/items.json', 'w') as file:
+                json.dump(app.state.products, file, indent=4)
+            return Response(status_code=status.HTTP_204_NO_CONTENT)
     return JSONResponse(
         status_code=status.HTTP_404_NOT_FOUND,
         content={"message": f"Product with ID {id} not found."}
