@@ -1,9 +1,10 @@
 from random import randrange
 from typing import Optional
-from fastapi import Body, FastAPI, Query, Response, status
+from fastapi import Body, FastAPI, Query, Request, Response, status
 from contextlib import asynccontextmanager
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 import os
 import json
@@ -22,7 +23,13 @@ async def lifespan(app: FastAPI):
         app.state.products = {}
     yield 
 
-app = FastAPI(lifespan=lifespan)    
+app = FastAPI(lifespan=lifespan)   
+
+templates = Jinja2Templates(directory="dynamic/templates")
+
+@app.get("/consultation-form", response_class=HTMLResponse)
+async def consultation_form(request: Request):
+    return templates.TemplateResponse("consultation-form.html", {"request": request})
 
 # -----------------------------
 # Define data models using Pydantic
