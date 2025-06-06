@@ -31,6 +31,30 @@ templates = Jinja2Templates(directory="dynamic/templates")
 async def consultation_form(request: Request):
     return templates.TemplateResponse("consultation-form.html", {"request": request})
 
+@app.post("/submit-consultation", status_code=status.HTTP_201_CREATED)
+async def submit_consultation(request: Request):
+    data = await request.json()
+    entry = {
+        "NAME": data.get("name"),
+        "PHONE NUMBER": data.get("phone"),
+        "EMAIL": data.get("email")
+    }
+    file_path = "dataset/contact-invitations.json"
+    print("Writing to:", os.path.abspath(file_path))
+    print("Entry:", entry)
+    if os.path.exists(file_path):
+        with open(file_path, "r") as f:
+            try:
+                invitations = json.load(f)
+            except (FileNotFoundError, json.JSONDecodeError):
+                invitations = []
+    else:
+        invitations = []
+    invitations.append(entry)
+    with open(file_path, "w") as f:
+        json.dump(invitations, f, indent=4)
+    return JSONResponse(content={"message": "Consultation submitted successfully"})
+
 # -----------------------------
 # Define data models using Pydantic
 # -----------------------------
