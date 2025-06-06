@@ -1,5 +1,6 @@
 const searchInput = document.getElementById('searchInput');
 const container = document.getElementById('productsContainer');
+const loading = document.getElementById('loading');
 let allProducts = [];
 
 async function fetchProducts() {
@@ -39,6 +40,7 @@ function renderProducts(products) {
         fragment.appendChild(card);
     });
     container.appendChild(fragment);
+    loading.style.display = 'none'; // Hide loading after rendering
 }
 
 // Debounce utility
@@ -51,19 +53,20 @@ function debounce(fn, delay) {
 }
 
 function handleSearch() {
-    const query = searchInput.value.toLowerCase();
-    let filtered;
-    if (query === "") {
-        // Show all products (including out of stock) when search is empty
-        filtered = allProducts;
-    } else {
-        // Show all matching products (including out of stock)
-        filtered = allProducts.filter(([name, info]) =>
-            name.toLowerCase().includes(query) ||
-            (info.Category && info.Category.toLowerCase().includes(query))
-        );
-    }
-    renderProducts(filtered);
+    loading.style.display = 'block'; // Show loading
+    setTimeout(() => { // Simulate async search
+        const query = searchInput.value.toLowerCase();
+        let filtered;
+        if (query === "") {
+            filtered = allProducts;
+        } else {
+            filtered = allProducts.filter(([name, info]) =>
+                name.toLowerCase().includes(query) ||
+                (info.Category && info.Category.toLowerCase().includes(query))
+            );
+        }
+        renderProducts(filtered);
+    }, 300); // Adjust delay as needed for effect
 }
 
 searchInput.addEventListener('input', debounce(handleSearch, 200));
