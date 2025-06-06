@@ -6,29 +6,10 @@ async function fetchProducts() {
     try {
         const response = await fetch('/get_all_products');
         const data = await response.json();
-        const container = document.getElementById('productsContainer');
-        container.innerHTML = ""; // Clear previous content
+        // Populate allProducts as an array of [name, details] pairs
+        allProducts = Object.entries(data.product_data);
 
-        for (const [name, details] of Object.entries(data.product_data)) {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-
-            card.innerHTML = `
-                <h3>${name}</h3>
-                <p><strong>Price:</strong> Rs.${details.Price}</p>
-                <p><strong>Description:</strong> ${details.Description}</p>
-                <p><strong>Category:</strong> ${details.Category}</p>
-                <p>
-                    ${
-                        details.Quantity > 0
-                            ? `<strong>In Stock</strong>`
-                            : '<strong style="color: red;">Out of Stock</strong>'
-                    }
-                </p>
-            `;
-
-            container.appendChild(card);
-        }
+        renderProducts(allProducts); // Render all products initially
     } catch (error) {
         console.error("Error fetching products:", error);
     }
@@ -60,13 +41,13 @@ function renderProducts(products) {
 
 // Filter on input
 searchInput.addEventListener('input', () => {
-  console.log('Entered Searching')
+  console.log('Entered Searching');
   const query = searchInput.value.toLowerCase();
   const filtered = allProducts.filter(([name, info]) =>
-    name.toLowerCase().includes(query) ||
-    (info.Description && info.Description.toLowerCase().includes(query))
+    (info.Quantity > 0) && (
+      name.toLowerCase().includes(query) ||
+      (info.Category && info.Category.toLowerCase().includes(query))
+    )
   );
-
-  console.log('Filtered Products: ' || filtered);
   renderProducts(filtered);
 });
