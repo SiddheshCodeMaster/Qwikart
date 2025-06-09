@@ -7,5 +7,50 @@
         "Category": "Food",
         "is_available": true,
         "product_image_path": "dynamic/product_images/vegan-burrito.jpg"
+    },
+    "Marvel Organic Green Tea": {
+        "id": 729846,
+        "Price": 120,
+        "Description": "Marvel Organic Green Tea: Refreshing and Healthy",
+        "Quantity": 15,
+        "Category": "Beverages",
+        "is_available": true,
+        "product_image_path": "dynamic/product_images/organic-green-tea.jpg"
+    },
+    "Califia Farms: Organic Almond Milk": {
+        "id": 729847,
+        "Price": 150,
+        "Description": "Califia Farms: Organic Almond Milk: Dairy-Free and Nutritious",
+        "Quantity": 20,
+        "Category": "Beverages",
+        "is_available": true,
+        "product_image_path": "dynamic/product_images/Organic-Almond-Milk.jpg"
+    },
+    "Sans Gluten-Free Pasta": {
+        "id": 729848,
+        "Price": 200,
+        "Description": "Sans Gluten-Free Pasta: Made from Rice Flour",
+        "Quantity": 30,
+        "Category": "Food",
+        "is_available": true,
+        "product_image_path": "dynamic/product_images/Gluten-Free-Pasta.jpg"
+    },
+    "Borges: Organic Avocado Oil": {
+        "id": 729849,
+        "Price": 250,
+        "Description": "Borges: Organic Avocado Oil: Rich in Healthy Fats",
+        "Quantity": 120,
+        "Category": "Cooking Oils",
+        "is_available": true,
+        "product_image_path": "dynamic/product_images/Borges-Extra-Virign-Olive-Oil.jpg"
+    },
+    "Parle G : Oats and Cereal": {
+        "Price": 20.0,
+        "Description": "Parle G : Oats and Cereal Biscuits. Desh Ka Biscuit",
+        "Quantity": 11221,
+        "Category": "Food",
+        "is_available": true,
+        "id": 32877,
+        "product_image_path": "dynamic/product_images/Parle-G-Oats-&-Berries-Biscuits.jpg"
     }
 }
