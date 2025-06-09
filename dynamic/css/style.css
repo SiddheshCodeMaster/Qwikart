@@ -157,6 +157,16 @@ body {
     background: #f2f2f2; /* Light grey background on hover */
 }
 
+.product-image {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px auto;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
 * {
     box-sizing: border-box;
 }

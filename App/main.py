@@ -1,6 +1,6 @@
 from random import randrange
 from typing import Optional
-from fastapi import Body, FastAPI, Query, Request, Response, status
+from fastapi import FastAPI, Query, Request, Response, status
 from contextlib import asynccontextmanager
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -33,6 +33,7 @@ class ProductInfo(BaseModel):
     is_available: bool
     category: str
     id: Optional[int]
+    product_image_path: Optional[str] = None
 
 class Product(BaseModel):
     product_name: str
@@ -44,7 +45,7 @@ class Product(BaseModel):
 app = FastAPI(lifespan=lifespan)
 templates = Jinja2Templates(directory="dynamic/templates")
 app.mount("/dynamic", StaticFiles(directory="dynamic"), name="dynamic")
-
+# app.mount("/dynamic/product_images", StaticFiles(directory="product_images"), name="product_images")
 # -----------------------------
 # Page Endpoints
 # -----------------------------
@@ -135,7 +136,8 @@ def create_products(new_product: Product):
         "Quantity": new_product.information.Quantity,
         "Category": new_product.information.category,
         "is_available": new_product.information.is_available,
-        "id": new_id
+        "id": new_id,
+        "product_image_path": new_product.information.product_image_path  
     }
     app.state.products[new_product.product_name] = product_data
     with open('dataset/items.json', 'w') as file:
@@ -152,7 +154,8 @@ def update_product(id: int, updated_product: Product):
                 "Quantity": updated_product.information.Quantity,
                 "Category": updated_product.information.category,
                 "is_available": updated_product.information.is_available,
-                "id": id
+                "id": id,
+                "product_image_path": updated_product.information.product_image_path
             }
             app.state.products[product_name] = updated_data
             with open('dataset/items.json', 'w') as file:
