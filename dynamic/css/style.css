@@ -134,12 +134,15 @@ body {
 
 /* Container for product cards */
 .products-container {
+    flex: 1;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
-    padding: 40px;
-    max-width: 1200px;
-    margin: auto;
+    padding: 40px 20px;
+    max-width: 1000px;      /* Limit the max width */
+    margin: 0 auto;         /* Center the grid */
+    box-sizing: border-box;
+    justify-content: center; /* Center items if not filling all columns */
 }
 
 /* Individual product card */
@@ -150,6 +153,8 @@ body {
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 320px;
+    margin: 0 auto;
 }
 .product-card:hover {
     transform: translateY(-5px);
@@ -220,4 +225,87 @@ h1 {
     justify-content: center;
     align-items: center;
     min-height: 80vh;
+}
+
+.main-content {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: 80vh;
+    box-sizing: border-box;
+}
+
+.sidebar {
+    width: 240px;
+    min-width: 180px;
+    background: #16171d;
+    color: #bdbecb;
+    padding: 30px 15px;
+    min-height: 80vh;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.filters-dropdown {
+    width: 100%;
+}
+
+.dropdown-btn {
+    width: 100%;
+    background: #23242a;
+    color: #bdbecb;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.dropdown-content {
+    display: none;
+    flex-direction: column;
+    background: #23242a;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 0;
+    z-index: 10;
+    position: static; /* Ensure it stays inside the sidebar */
+}
+
+.filters-dropdown.active .dropdown-content {
+    display: flex;
+}
+
+.filters-dropdown label {
+    margin-top: 10px;
+    font-size: 0.95em;
+}
+
+.filters-dropdown select {
+    margin-top: 5px;
+    padding: 6px;
+    border-radius: 5px;
+    border: none;
+    background: #16171d;
+    color: #bdbecb;
+}
+
+@media (max-width: 900px) {
+    .main-content {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        min-width: 0;
+        min-height: unset;
+        margin-bottom: 20px;
+    }
+    .products-container {
+        padding: 20px 5px;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
 }

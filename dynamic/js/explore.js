@@ -3,6 +3,51 @@ const container = document.getElementById('productsContainer');
 const loading = document.getElementById('loading');
 let allProducts = [];
 
+
+// Sidebar dropdown toggle
+document.querySelector('.dropdown-btn').addEventListener('click', function() {
+    document.querySelector('.filters-dropdown').classList.toggle('active');
+});
+
+// Populate category filter options dynamically
+function populateCategoryFilter() {
+    const categorySet = new Set(allProducts.map(([_, info]) => info.Category));
+    const categoryFilter = document.getElementById('categoryFilter');
+    categoryFilter.innerHTML = '<option value="">All</option>';
+    categorySet.forEach(cat => {
+        if (cat) {
+            const option = document.createElement('option');
+            option.value = cat;
+            option.textContent = cat;
+            categoryFilter.appendChild(option);
+        }
+    });
+}
+
+// Filter logic for sidebar
+function applySidebarFilters(products) {
+    const category = document.getElementById('categoryFilter').value;
+    const price = document.getElementById('priceFilter').value;
+    return products.filter(([_, info]) => {
+        let catMatch = !category || info.Category === category;
+        let priceMatch = true;
+        if (price === "low") priceMatch = info.Price < 100;
+        else if (price === "mid") priceMatch = info.Price >= 100 && info.Price <= 200;
+        else if (price === "high") priceMatch = info.Price > 200;
+        return catMatch && priceMatch;
+    });
+}
+
+// Listen for filter changes
+document.getElementById('categoryFilter').addEventListener('change', () => {
+    let filtered = applySidebarFilters(allProducts);
+    renderProducts(filtered);
+});
+document.getElementById('priceFilter').addEventListener('change', () => {
+    let filtered = applySidebarFilters(allProducts);
+    renderProducts(filtered);
+});
+
 async function fetchProducts() {
     try {
         const response = await fetch('/get_all_products');

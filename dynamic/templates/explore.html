@@ -18,13 +18,34 @@
         </svg>
         <input id="searchInput" class="input" type="text" placeholder="Search for products..." />
     </div>
-    <div id="loading" style="display:none; text-align:center; margin:20px;">
-        <span>Loading the Products...</span>
+
+    <div class="main-content">
+        <aside class="sidebar">
+            <div class="filters-dropdown">
+            <button class="dropdown-btn">FILTERS &#9662;</button>
+            <div class="dropdown-content">
+                <label for="categoryFilter">Filter by Category:</label>
+                <select id="categoryFilter">
+                <option value="">All</option>
+                </select>
+                <label for="priceFilter">Filter by Price:</label>
+                <select id="priceFilter">
+                <option value="">All</option>
+                <option value="low">Below Rs. 100</option>
+                <option value="mid">Rs. 100 - Rs. 200</option>
+                <option value="high">Above Rs. 200</option>
+                </select>
+            </div>
+            </div>
+        </aside>
+
+        <div id="loading" style="display:none; text-align:center; margin:20px;">
+            <span>Loading the Products...</span>
+        </div>
+        <div class="products-container" id="productsContainer"></div>
+
+        <!-- <div class="products-container" id="productsContainer"></div> -->
     </div>
-    <div class="products-container" id="productsContainer"></div>
-
-    <!-- <div class="products-container" id="productsContainer"></div> -->
-
     <script src="/dynamic/js/explore.js"></script>
 </body>
 </html>
