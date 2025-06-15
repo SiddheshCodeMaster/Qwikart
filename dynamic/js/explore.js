@@ -1,6 +1,6 @@
 const searchInput = document.getElementById('searchInput');
 const container = document.getElementById('productsContainer');
-const loading = document.getElementById('loading');
+// const loading = document.getElementById('loading');
 let allProducts = [];
 
 
@@ -86,7 +86,7 @@ function renderProducts(products) {
         fragment.appendChild(card);
     });
     container.appendChild(fragment);
-    loading.style.display = 'none'; // Hide loading after rendering
+    // loading.style.display = 'none'; // Hide loading after rendering
 }
 
 // Debounce utility
@@ -99,7 +99,7 @@ function debounce(fn, delay) {
 }
 
 function handleSearch() {
-    loading.style.display = 'block'; // Show loading
+    // loading.style.display = 'block'; // Show loading
     setTimeout(() => { // Simulate async search
         const query = searchInput.value.toLowerCase();
         let filtered;
