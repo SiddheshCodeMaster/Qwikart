@@ -1,6 +1,6 @@
 /* General Body Styling */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
@@ -8,8 +8,8 @@ body {
     align-items: center;
     justify-content: flex-start;
     min-height: 100vh;
-    background: linear-gradient(135deg, #1E90FF, #87CEFA); /* Blue gradient background */
-    color: #ffffff;
+    background: linear-gradient(135deg, #232526 0%, #414345 100%);
+    color: #f5f6fa;
     animation: backgroundScroll 10s infinite alternate;
 }
 
@@ -25,24 +25,25 @@ body {
     height: auto;
     margin: 40px 0 20px 0;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.2));
 }
 .logo:hover {
     transform: scale(1.1);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.2);
 }
 
 /* Main Message Styling */
 .message {
     font-size: 1.8em;
     text-align: center;
-    background: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+    background: rgba(44, 62, 80, 0.85);
     padding: 15px 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.08);
+    color: #f5f6fa;
 }
 .dynamic-text {
-    color: #00BFFF; /* Lighter blue for dynamic text */
+    color: #00b894;
     font-weight: bold;
 }
 
@@ -50,82 +51,76 @@ body {
 .quotes {
     font-size: 1.2em;
     font-style: italic;
-    color: #ffffff;
+    color: #b2bec3;
     margin-top: 10px;
     text-align: center;
     padding: 15px 25px;
-    background: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+    background: rgba(44, 62, 80, 0.7);
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 10px rgba(52, 152, 219, 0.07);
 }
 
 /* Button Styling */
 .btn {
     margin-top: 20px;
-    padding: 10px 20px;
+    padding: 10px 24px;
     font-size: 1em;
-    color: #ffffff;
-    background: #4682B4; /* Darker blue button */
+    color: #fff;
+    background: linear-gradient(90deg, #00b894 0%, #0984e3 100%);
     border: none;
     border-radius: 25px;
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 .btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transform: scale(1.06);
+    box-shadow: 0 4px 18px rgba(0, 184, 148, 0.18);
 }
 
-/* ------------------------------- */
 /* Product Grid Page (explore.html) */
-/* ------------------------------- */
-
 .group {
     display: flex;
     line-height: 28px;
     align-items: center;
     position: relative;
-    max-width: 320px;
+    max-width: 340px;
     margin: 30px auto 0 auto;
 }
 
 .input {
-    font-family: "Montserrat", Arial, sans-serif;
+    font-family: "Inter", Arial, sans-serif;
     width: 100%;
-    height: 45px;
+    height: 48px;
     padding-left: 2.5rem;
-    box-shadow: 0 0 0 1.5px #2b2c37, 0 0 25px -17px #000;
+    box-shadow: 0 0 0 1.5px #636e72, 0 0 25px -17px #000;
     border: 0;
-    border-radius: 12px;
-    background-color: #16171d;
+    border-radius: 14px;
+    background-color: #2d3436;
     outline: none;
-    color: #bdbecb;
-    transition: all 0.25s cubic-bezier(0.19, 1, 0.22, 1);
+    color: #dfe6e9;
+    transition: all 0.22s cubic-bezier(0.19, 1, 0.22, 1);
     cursor: text;
     z-index: 0;
     font-size: 1em;
 }
 
 .input::placeholder {
-    color: #bdbecb;
+    color: #b2bec3;
 }
 
-.input:hover {
-    box-shadow: 0 0 0 2.5px #2f303d, 0px 0px 25px -15px #000;
+.input:hover, .input:focus {
+    box-shadow: 0 0 0 2.5px #00b894, 0px 0px 25px -15px #00b894;
 }
 
 .input:active {
-    transform: scale(0.95);
-}
-
-.input:focus {
-    box-shadow: 0 0 0 2.5px #2f303d;
+    transform: scale(0.97);
 }
 
 .search-icon {
     position: absolute;
     left: 1rem;
-    fill: #bdbecb;
+    fill: #b2bec3;
     width: 1rem;
     height: 1rem;
     pointer-events: none;
@@ -136,30 +131,32 @@ body {
 .products-container {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
     padding: 40px 20px;
-    max-width: 1000px;      /* Limit the max width */
-    margin: 0 auto;         /* Center the grid */
+    max-width: 1100px;
+    margin: 0 auto;
     box-sizing: border-box;
-    justify-content: center; /* Center items if not filling all columns */
+    justify-content: center;
 }
 
 /* Individual product card */
 .product-card {
-    background: #ffffff;
-    color: #000000;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    max-width: 320px;
+    background: linear-gradient(135deg, #232526 0%, #414345 100%);
+    color: #f5f6fa;
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.13);
+    transition: transform 0.22s, box-shadow 0.22s, background 0.22s;
+    max-width: 340px;
     margin: 0 auto;
+    border: 1.5px solid #636e72;
 }
 .product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-    background: #f2f2f2; /* Light grey background on hover */
+    transform: translateY(-7px) scale(1.03);
+    box-shadow: 0 8px 28px rgba(0, 184, 148, 0.13);
+    background: linear-gradient(135deg, #00b894 0%, #0984e3 100%);
+    color: #fff;
 }
 
 .product-image {
@@ -167,9 +164,9 @@ body {
     height: 180px;
     display: block;
     margin: 0 auto 10px auto;
-    border-radius: 8px;
-    object-fit: contain;   /* Show the whole image, no cropping */
-    background: #f2f2f2;
+    border-radius: 10px;
+    object-fit: contain;
+    background: #636e72;
 }
 
 * {
@@ -182,40 +179,39 @@ h1 {
 }
 
 /* Section Footer - Contact Form */
-/* From Uiverse.io by andrew-demchenk0 */ 
 .feed-form {
   margin-top: 36px;
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 320px;
 }
 
 .feed-form input {
   height: 54px;
-  border-radius: 5px;
-  background: white;
+  border-radius: 7px;
+  background: #232526;
   margin-bottom: 15px;
   border: none;
   padding: 0 20px;
-  font-weight: 300;
-  font-size: 14px;
-  color: #4B4B4B;
+  font-weight: 400;
+  font-size: 15px;
+  color: #f5f6fa;
 }
 
 .button_submit:hover, .feed-form input:hover {
-  transform: scale(1.009);
-  box-shadow: 0px 0px 3px 0px #212529;
+  transform: scale(1.01);
+  box-shadow: 0px 0px 6px 0px #00b894;
 }
 
 .button_submit {
   width: 100%;
   height: 54px;
-  font-size: 14px;
+  font-size: 15px;
   color: white;
-  background: red;
-  border-radius: 5px;
+  background: linear-gradient(90deg, #00b894 0%, #0984e3 100%);
+  border-radius: 7px;
   border: none;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
 }
 
@@ -240,12 +236,14 @@ h1 {
 .sidebar {
     width: 240px;
     min-width: 180px;
-    background: #16171d;
-    color: #bdbecb;
+    background: #232526;
+    color: #b2bec3;
     padding: 30px 15px;
     min-height: 80vh;
     box-sizing: border-box;
     flex-shrink: 0;
+    border-radius: 0 16px 16px 0;
+    box-shadow: 2px 0 12px rgba(0,0,0,0.07);
 }
 
 .filters-dropdown {
@@ -254,8 +252,8 @@ h1 {
 
 .dropdown-btn {
     width: 100%;
-    background: #23242a;
-    color: #bdbecb;
+    background: #414345;
+    color: #b2bec3;
     border: none;
     padding: 12px;
     border-radius: 8px;
@@ -263,17 +261,22 @@ h1 {
     cursor: pointer;
     text-align: left;
     margin-bottom: 10px;
+    transition: background 0.2s;
+}
+.dropdown-btn:hover {
+    background: #00b894;
+    color: #fff;
 }
 
 .dropdown-content {
     display: none;
     flex-direction: column;
-    background: #23242a;
+    background: #414345;
     border-radius: 8px;
     padding: 10px;
     margin-top: 0;
     z-index: 10;
-    position: static; /* Ensure it stays inside the sidebar */
+    position: static;
 }
 
 .filters-dropdown.active .dropdown-content {
@@ -290,8 +293,8 @@ h1 {
     padding: 6px;
     border-radius: 5px;
     border: none;
-    background: #16171d;
-    color: #bdbecb;
+    background: #232526;
+    color: #b2bec3;
 }
 
 @media (max-width: 900px) {
@@ -303,6 +306,7 @@ h1 {
         min-width: 0;
         min-height: unset;
         margin-bottom: 20px;
+        border-radius: 0 0 16px 16px;
     }
     .products-container {
         padding: 20px 5px;
