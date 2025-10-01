@@ -46,9 +46,11 @@ app = FastAPI(lifespan=lifespan)
 templates = Jinja2Templates(directory="dynamic/templates")
 app.mount("/dynamic", StaticFiles(directory="dynamic"), name="dynamic")
 # app.mount("/dynamic/product_images", StaticFiles(directory="product_images"), name="product_images")
+
 # -----------------------------
 # Page Endpoints
 # -----------------------------
+    
 @app.get("/welcomeQwikart", response_class=HTMLResponse)
 def root():
     file_path = os.path.join("dynamic/templates", "welcome.html")
@@ -177,4 +179,4 @@ def delete_product(id: int):
     return JSONResponse(
         status_code=status.HTTP_404_NOT_FOUND,
         content={"message": f"Product with ID {id} not found."}
-    )
+    ) 
