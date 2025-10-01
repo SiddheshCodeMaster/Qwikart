@@ -10,7 +10,7 @@ To revolutionize the retail experience by offering customers seamless, on-demand
 
 **Mission:**
 
-Achieve a ~ **100% fulfillment rate** by combining advanced technologies and streamlined operational strategies. Deliver products to customers on time, every time, using an API-based system designed for efficiency and scalability.
+Achieve a ~ **98% fulfillment rate** by combining advanced technologies and streamlined operational strategies. Deliver products to customers on time, every time, using an API-based system designed for efficiency and scalability.
 
 ## **Key Strategies**
 
@@ -39,7 +39,7 @@ Achieve a ~ **100% fulfillment rate** by combining advanced technologies and str
 
 ## **Key Differentiators**
 
-1. ** ~ 98% Fulfillment Rate**
+1. **~ 98% Fulfillment Rate**
     
     The core differentiator of QwiKart is its **unmatched fulfillment rate**. Unlike many other e-commerce platforms that may suffer from out-of-stock items or delayed deliveries, QwiKart’s integration with real-time systems ensures that every order is fulfilled on time.
     
