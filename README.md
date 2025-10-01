@@ -39,7 +39,7 @@ Achieve a ~ **98% fulfillment rate** by combining advanced technologies and stre
 
 ## **Key Differentiators**
 
-1. **~ 98% Fulfillment Rate**
+1. **~98% Fulfillment Rate**
     
     The core differentiator of QwiKart is its **unmatched fulfillment rate**. Unlike many other e-commerce platforms that may suffer from out-of-stock items or delayed deliveries, QwiKart’s integration with real-time systems ensures that every order is fulfilled on time.
     
