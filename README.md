@@ -1,6 +1,6 @@
 # QwiKart ~ Just In Time Store 
 
-QwiKart is an innovative e-commerce platform designed to provide an exceptional shopping experience with an emphasis on achieving a ~100% Fulfillment Rate. The platform leverages cutting-edge Python and API-based systems to ensure real-time inventory management, seamless order processing, and timely delivery. At the heart of QwiKart’s philosophy is the concept of “Just-in-Time” fulfillment — providing customers with exactly what they need, when they need it, without any delays or overstocking.
+QwiKart is an innovative e-commerce platform designed to provide an exceptional shopping experience with an emphasis on achieving a ~ 98% Fulfillment Rate. The platform leverages cutting-edge Python and API-based systems to ensure real-time inventory management, seamless order processing, and timely delivery. At the heart of QwiKart’s philosophy is the concept of “Just-in-Time” fulfillment — providing customers with exactly what they need, when they need it, without any delays or overstocking.
 
 ## **Vision & Mission**
 
@@ -39,7 +39,7 @@ Achieve a ~ **100% fulfillment rate** by combining advanced technologies and str
 
 ## **Key Differentiators**
 
-1. **100% Fulfillment Rate**
+1. ** ~ 98% Fulfillment Rate**
     
     The core differentiator of QwiKart is its **unmatched fulfillment rate**. Unlike many other e-commerce platforms that may suffer from out-of-stock items or delayed deliveries, QwiKart’s integration with real-time systems ensures that every order is fulfilled on time.
     
