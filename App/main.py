@@ -5,10 +5,17 @@ from contextlib import asynccontextmanager
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from pydantic import BaseModel
+from pydantic import BaseModel, conint
+from datetime import datetime
 import os
 import json
-    
+
+# -----------------------------
+# Defining PostgreSQL BIGINT range
+# -----------------------------
+
+BigInt = conint(ge=-9223372036854775808, le=9223372036854775807)
+
 # -----------------------------
 # Load products JSON once at startup
 # -----------------------------
@@ -38,6 +45,51 @@ class ProductInfo(BaseModel):
 class Product(BaseModel):
     product_name: str
     information: ProductInfo
+
+class Users(BaseModel):
+    id: Optional[int]
+    username: str
+    lastname: str
+    email: str
+    age: int
+    gender: str
+    password: str
+    user_created_at: Optional[datetime] = None
+    user_updated_at: Optional[datetime] = None
+
+class Admin(BaseModel):
+    id: Optional[int]
+    admin_username: Users.username
+    admin_password: Users.password
+
+class Api_transactions(BaseModel):
+    id: BigInt
+    username: Users.username
+    req_string: str
+    res_String: str
+    status: str
+    err_code: Optional[int] = None
+    err_msg: Optional[str] = None
+    api_hit_id: BigInt
+
+class Fullfilled_orders(BaseModel):
+    api_transaction_id: Api_transactions.api_hit_id 
+    order_status: Api_transactions.status
+    order_fullfilled: bool   
+
+
+class History_Orders(BaseModel):
+    api_transaction_id: Fullfilled_orders.api_transaction_id 
+    order_status: Api_transactions.status
+    order_created_at: Optional[datetime] = None
+    order_fulfillment_info: Fullfilled_orders
+
+class Location_information(BaseModel):
+    location: str
+    city: str
+    state: str
+    pincode: str
+    country: str
 
 # -----------------------------
 # Static & Template Setup
