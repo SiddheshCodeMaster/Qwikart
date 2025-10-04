@@ -1,14 +1,37 @@
 from random import randrange
+from datetime import datetime
+import os
+import json
 from typing import Optional
+import time
+
 from fastapi import FastAPI, Query, Request, Response, status
 from contextlib import asynccontextmanager
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, conint
-from datetime import datetime
-import os
-import json
+
+import psycopg2
+from psycopg2.extras import RealDictCursor
+
+# -----------------------------
+# Establishing Database Connection
+# -----------------------------
+
+while True:
+    try: 
+        conn = psycopg2.connect(
+                host='localhost',
+                database='qwikart-central-db',
+                user='postgres',
+                password='password123', cursor_factory=RealDictCursor)
+        cursor = conn.cursor()
+        print("Database connection established") 
+        break  
+    except Exception as err:
+        print("Error connecting to database: ", err)
+        time.sleep(5)
 
 # -----------------------------
 # Defining PostgreSQL BIGINT range
@@ -59,12 +82,12 @@ class Users(BaseModel):
 
 class Admin(BaseModel):
     id: Optional[int]
-    admin_username: Users.username
-    admin_password: Users.password
+    admin_username: str
+    admin_password: str
 
 class Api_transactions(BaseModel):
     id: BigInt
-    username: Users.username
+    username: str
     req_string: str
     res_String: str
     status: str
@@ -73,14 +96,14 @@ class Api_transactions(BaseModel):
     api_hit_id: BigInt
 
 class Fullfilled_orders(BaseModel):
-    api_transaction_id: Api_transactions.api_hit_id 
-    order_status: Api_transactions.status
+    api_transaction_id: BigInt
+    order_status: str
     order_fullfilled: bool   
 
 
 class History_Orders(BaseModel):
-    api_transaction_id: Fullfilled_orders.api_transaction_id 
-    order_status: Api_transactions.status
+    api_transaction_id: BigInt 
+    order_status: str
     order_created_at: Optional[datetime] = None
     order_fulfillment_info: Fullfilled_orders
 
