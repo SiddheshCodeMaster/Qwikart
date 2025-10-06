@@ -5,7 +5,7 @@ import json
 from typing import Optional
 import time
 
-from fastapi import FastAPI, Query, Request, Response, status
+from fastapi import FastAPI, Query, Request, Response, status,HTTPException
 from contextlib import asynccontextmanager
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -187,10 +187,12 @@ def get_products():
 
 @app.get("/Products/{id}")
 def get_product(id: int):
-    for product_name, product_details in app.state.products.items():
-        if product_details.get("id") == id:
-            return {"product_detail": {product_name: product_details}}
-    return {"error": f"Product with ID {id} not found."}
+    cursor.execute("SELECT * FROM products WHERE id = %s",(str(id),))
+    product = cursor.fetchone()
+    if product:
+        return product
+    else:
+        return {"error": f"Product with ID {id} not found."}
 
 # -----------------------------
 # Product Endpoints (Admin)
@@ -209,53 +211,54 @@ def create_products(new_product: Product):
     product_data = cursor.fetchone()
 
     conn.commit() 
-    
-    # new_id = randrange(0, 100000)
-    # product_data = {
-    #     "Price": new_product.information.Price,
-    #     "Description": new_product.information.Description,
-    #     "Quantity": new_product.information.Quantity,
-    #     "Category": new_product.information.category,
-    #     "is_available": new_product.information.is_available,
-    #     "id": new_id,
-    #     "product_image_path": new_product.information.product_image_path  
-    # }
-    # app.state.products[new_product.product_name] = product_data
-    # with open('dataset/items.json', 'w') as file:
-    #     json.dump(app.state.products, file, indent=4)
     return {"data": product_data}
 
 @app.put("/Products/{id}", status_code=status.HTTP_200_OK)
 def update_product(id: int, updated_product: Product):
-    for product_name, product_details in app.state.products.items():
-        if product_details.get("id") == id:
-            updated_data = {
-                "Price": updated_product.information.Price,
-                "Description": updated_product.information.Description,
-                "Quantity": updated_product.information.Quantity,
-                "Category": updated_product.information.category,
-                "is_available": updated_product.information.is_available,
-                "id": id,
-                "product_image_path": updated_product.information.product_image_path
-            }
-            app.state.products[product_name] = updated_data
-            with open('dataset/items.json', 'w') as file:
-                json.dump(app.state.products, file, indent=4)
-            return {"data": updated_data}
-    return JSONResponse(
-        status_code=status.HTTP_404_NOT_FOUND,
-        content={"message": f"Product with ID {id} not found."}
-    )
+    cursor.execute("UPDATE products SET name=%s, price=%s, description=%s, quantity=%s, category=%s, is_available=%s WHERE id=%s RETURNING *",
+                   (updated_product.product_name,
+                    updated_product.information.Price,
+                    updated_product.information.Description,
+                    updated_product.information.Quantity,
+                    updated_product.information.category,
+                    updated_product.information.is_available,
+                    str(id)))
+    
+    updated_data = cursor.fetchone()
+    conn.commit()
+    if updated_data == None: 
+        raise HTTPException(status_code=404, detail=f"Product with ID {id} not found.")
+    return {"data": updated_data}
+
+    # for product_name, product_details in app.state.products.items():
+    #     if product_details.get("id") == id:
+    #         updated_data = {
+    #             "Price": updated_product.information.Price,
+    #             "Description": updated_product.information.Description,
+    #             "Quantity": updated_product.information.Quantity,
+    #             "Category": updated_product.information.category,
+    #             "is_available": updated_product.information.is_available,
+    #             "id": id,
+    #             "product_image_path": updated_product.information.product_image_path
+    #         }
+    #         app.state.products[product_name] = updated_data
+    #         with open('dataset/items.json', 'w') as file:
+    #             json.dump(app.state.products, file, indent=4)
+    #         return {"data": updated_data}
+    # return JSONResponse(
+    #     status_code=status.HTTP_404_NOT_FOUND,
+    #     content={"message": f"Product with ID {id} not found."}
+    # )
 
 @app.delete("/Products/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_product(id: int):
-    for product_name, product_details in list(app.state.products.items()):
-        if product_details.get("id") == id:
-            del app.state.products[product_name]
-            with open('dataset/items.json', 'w') as file:
-                json.dump(app.state.products, file, indent=4)
-            return Response(status_code=status.HTTP_204_NO_CONTENT)
-    return JSONResponse(
-        status_code=status.HTTP_404_NOT_FOUND,
-        content={"message": f"Product with ID {id} not found."}
-    ) 
+
+    cursor.execute("DELETE FROM products WHERE id = %s RETURNING *", (str(id),))
+    deleted_product = cursor.fetchone()
+
+    conn.commit()
+
+    if deleted_product == None: 
+        raise HTTPException(status_code=404, detail=f"Product with ID {id} not found.")
+    
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
