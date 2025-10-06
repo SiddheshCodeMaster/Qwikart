@@ -62,8 +62,7 @@ class ProductInfo(BaseModel):
     Quantity: int
     is_available: bool
     category: str
-    id: Optional[int]
-    product_image_path: Optional[str] = None
+    location_name: Optional[str] = None
 
 class Product(BaseModel):
     product_name: str
@@ -181,18 +180,10 @@ def get_products():
     return {"product_data": app.state.products}
 
 @app.get("/Products")
-async def get_products_by_category(category: str = Query(..., description="Category to filter by")):
-    data = app.state.products
-    filtered_products = {
-        name: details for name, details in data.items()
-        if details.get("Category", "").lower() == category.lower()
-    }
-    if not filtered_products:
-        return JSONResponse(
-            status_code=404,
-            content={"message": f"No products found in category: {category}"}
-        )
-    return {"products": filtered_products}
+def get_products():
+    cursor.execute("SELECT * FROM products")
+    products = cursor.fetchall()
+    return products
 
 @app.get("/Products/{id}")
 def get_product(id: int):
@@ -206,19 +197,32 @@ def get_product(id: int):
 # -----------------------------
 @app.post("/Products", status_code=status.HTTP_201_CREATED)
 def create_products(new_product: Product):
-    new_id = randrange(0, 100000)
-    product_data = {
-        "Price": new_product.information.Price,
-        "Description": new_product.information.Description,
-        "Quantity": new_product.information.Quantity,
-        "Category": new_product.information.category,
-        "is_available": new_product.information.is_available,
-        "id": new_id,
-        "product_image_path": new_product.information.product_image_path  
-    }
-    app.state.products[new_product.product_name] = product_data
-    with open('dataset/items.json', 'w') as file:
-        json.dump(app.state.products, file, indent=4)
+    cursor.execute("INSERT INTO PRODUCTS (name, price, description, quantity, category, is_available, location_name) " \
+    "VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING *",
+                   (new_product.product_name, 
+                    new_product.information.Price, 
+                    new_product.information.Description, 
+                    new_product.information.Quantity, 
+                    new_product.information.category, 
+                    new_product.information.is_available,
+                    new_product.information.location_name))
+    product_data = cursor.fetchone()
+
+    conn.commit() 
+    
+    # new_id = randrange(0, 100000)
+    # product_data = {
+    #     "Price": new_product.information.Price,
+    #     "Description": new_product.information.Description,
+    #     "Quantity": new_product.information.Quantity,
+    #     "Category": new_product.information.category,
+    #     "is_available": new_product.information.is_available,
+    #     "id": new_id,
+    #     "product_image_path": new_product.information.product_image_path  
+    # }
+    # app.state.products[new_product.product_name] = product_data
+    # with open('dataset/items.json', 'w') as file:
+    #     json.dump(app.state.products, file, indent=4)
     return {"data": product_data}
 
 @app.put("/Products/{id}", status_code=status.HTTP_200_OK)
