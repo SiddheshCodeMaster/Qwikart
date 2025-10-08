@@ -5,15 +5,19 @@ import json
 from typing import Optional
 import time
 
-from fastapi import FastAPI, Query, Request, Response, status,HTTPException
+from fastapi import FastAPI, Query, Request, Response, status,HTTPException, Depends 
 from contextlib import asynccontextmanager
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, conint
+from sqlalchemy.orm import Session
 
 import psycopg2
 from psycopg2.extras import RealDictCursor
+
+from . import models
+from .database import engine,get_db
 
 # -----------------------------
 # Establishing Database Connection
@@ -116,6 +120,9 @@ class Location_information(BaseModel):
 # -----------------------------
 # Static & Template Setup
 # -----------------------------
+
+models.Base.metadata.create_all(bind=engine)
+
 app = FastAPI(lifespan=lifespan)
 templates = Jinja2Templates(directory="dynamic/templates")
 app.mount("/dynamic", StaticFiles(directory="dynamic"), name="dynamic")
@@ -197,6 +204,11 @@ def get_product(id: int):
 # -----------------------------
 # Product Endpoints (Admin)
 # -----------------------------
+
+@app.get("sqlalchemy")
+def test_products(db: Session = Depends(get_db)):
+    return {"status": "success"}
+
 @app.post("/Products", status_code=status.HTTP_201_CREATED)
 def create_products(new_product: Product):
     cursor.execute("INSERT INTO PRODUCTS (name, price, description, quantity, category, is_available, location_name) " \
@@ -229,26 +241,6 @@ def update_product(id: int, updated_product: Product):
     if updated_data == None: 
         raise HTTPException(status_code=404, detail=f"Product with ID {id} not found.")
     return {"data": updated_data}
-
-    # for product_name, product_details in app.state.products.items():
-    #     if product_details.get("id") == id:
-    #         updated_data = {
-    #             "Price": updated_product.information.Price,
-    #             "Description": updated_product.information.Description,
-    #             "Quantity": updated_product.information.Quantity,
-    #             "Category": updated_product.information.category,
-    #             "is_available": updated_product.information.is_available,
-    #             "id": id,
-    #             "product_image_path": updated_product.information.product_image_path
-    #         }
-    #         app.state.products[product_name] = updated_data
-    #         with open('dataset/items.json', 'w') as file:
-    #             json.dump(app.state.products, file, indent=4)
-    #         return {"data": updated_data}
-    # return JSONResponse(
-    #     status_code=status.HTTP_404_NOT_FOUND,
-    #     content={"message": f"Product with ID {id} not found."}
-    # )
 
 @app.delete("/Products/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_product(id: int):
