@@ -60,17 +60,14 @@ async def lifespan(app: FastAPI):
 # -----------------------------
 # Define data models using Pydantic
 # -----------------------------
-class ProductInfo(BaseModel):
-    Price: float
-    Description: str
-    Quantity: int
+class Product(BaseModel):
+    name: str
+    price: float
+    description: str
+    quantity: int
     is_available: bool
     category: str
     location_name: Optional[str] = None
-
-class Product(BaseModel):
-    product_name: str
-    information: ProductInfo
 
 class Users(BaseModel):
     id: Optional[int]
@@ -182,14 +179,10 @@ async def submit_consultation(request: Request):
 # -----------------------------
 # Product Endpoints (User)
 # -----------------------------
-@app.get("/get_all_products")
-def get_products():
-    return {"product_data": app.state.products}
 
 @app.get("/Products")
-def get_products():
-    cursor.execute("SELECT * FROM products")
-    products = cursor.fetchall()
+def get_products(db: Session = Depends(get_db)):
+    products = db.query(models.Product).all()
     return products
 
 @app.get("/Products/{id}")
@@ -205,25 +198,14 @@ def get_product(id: int):
 # Product Endpoints (Admin)
 # -----------------------------
 
-@app.get("sqlalchemy")
-def test_products(db: Session = Depends(get_db)):
-    return {"status": "success"}
-
 @app.post("/Products", status_code=status.HTTP_201_CREATED)
-def create_products(new_product: Product):
-    cursor.execute("INSERT INTO PRODUCTS (name, price, description, quantity, category, is_available, location_name) " \
-    "VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING *",
-                   (new_product.product_name, 
-                    new_product.information.Price, 
-                    new_product.information.Description, 
-                    new_product.information.Quantity, 
-                    new_product.information.category, 
-                    new_product.information.is_available,
-                    new_product.information.location_name))
-    product_data = cursor.fetchone()
-
-    conn.commit() 
-    return {"data": product_data}
+def create_products(new_product: Product, db: Session = Depends(get_db)):
+    
+    create_product = models.Product(**new_product.dict())
+    db.add(create_product)
+    db.commit()
+    db.refresh(create_product)
+    return {"data": create_product}
 
 @app.put("/Products/{id}", status_code=status.HTTP_200_OK)
 def update_product(id: int, updated_product: Product):

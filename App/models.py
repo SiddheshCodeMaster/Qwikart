@@ -5,7 +5,7 @@ from datetime import datetime
 class Product(Base):
     __tablename__ = 'products'
     id = Column(Integer, primary_key=True, index=True)
-    product_name = Column(String, index=True, nullable=False)
+    name = Column(String, index=True, nullable=False)
     price = Column(Float, nullable=False)
     description = Column(String, nullable=False)
     quantity = Column(Integer, nullable=False)
