@@ -186,13 +186,12 @@ def get_products(db: Session = Depends(get_db)):
     return products
 
 @app.get("/Products/{id}")
-def get_product(id: int):
-    cursor.execute("SELECT * FROM products WHERE id = %s",(str(id),))
-    product = cursor.fetchone()
-    if product:
-        return product
+def get_product(id: int, db: Session = Depends(get_db)):
+    get_product = db.query(models.Product).filter(models.Product.id == id).first()
+    if not get_product:
+        raise HTTPException(status_code=404, detail=f"Product with ID {id} not found.")
     else:
-        return {"error": f"Product with ID {id} not found."}
+        return get_product
 
 # -----------------------------
 # Product Endpoints (Admin)
@@ -208,31 +207,40 @@ def create_products(new_product: Product, db: Session = Depends(get_db)):
     return {"data": create_product}
 
 @app.put("/Products/{id}", status_code=status.HTTP_200_OK)
-def update_product(id: int, updated_product: Product):
-    cursor.execute("UPDATE products SET name=%s, price=%s, description=%s, quantity=%s, category=%s, is_available=%s WHERE id=%s RETURNING *",
-                   (updated_product.product_name,
-                    updated_product.information.Price,
-                    updated_product.information.Description,
-                    updated_product.information.Quantity,
-                    updated_product.information.category,
-                    updated_product.information.is_available,
-                    str(id)))
+def update_product(id: int, updated_product: Product,  db: Session = Depends(get_db)):
+    # cursor.execute("UPDATE products SET name=%s, price=%s, description=%s, quantity=%s, category=%s, is_available=%s WHERE id=%s RETURNING *",
+    #                (updated_product.product_name,
+    #                 updated_product.information.Price,
+    #                 updated_product.information.Description,
+    #                 updated_product.information.Quantity,
+    #                 updated_product.information.category,
+    #                 updated_product.information.is_available,
+    #                 str(id)))
     
-    updated_data = cursor.fetchone()
-    conn.commit()
-    if updated_data == None: 
-        raise HTTPException(status_code=404, detail=f"Product with ID {id} not found.")
-    return {"data": updated_data}
+    # updated_data = cursor.fetchone()
+    # conn.commit()
+    # if updated_data == None: 
+    #     raise HTTPException(status_code=404, detail=f"Product with ID {id} not found.")
+    # return {"data": updated_data}
 
+    update_product = db.query(models.Product).filter(models.Product.id == id)
+
+    if update_product.first() == None:
+        raise HTTPException(status_code=404, detail=f"Product with ID {id} not found.")
+    else:
+        update_product.update(updated_product.dict(),synchronize_session = False)
+        db.commit()
+
+        return {"data":update_product.first()}
+        
 @app.delete("/Products/{id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_product(id: int):
+def delete_product(id: int, db: Session = Depends(get_db)):
 
-    cursor.execute("DELETE FROM products WHERE id = %s RETURNING *", (str(id),))
-    deleted_product = cursor.fetchone()
+    delete_product = db.query(models.Product).filter(models.Product.id == id)
 
-    conn.commit()
-
-    if deleted_product == None: 
-        raise HTTPException(status_code=404, detail=f"Product with ID {id} not found.")
-    
-    return Response(status_code=status.HTTP_204_NO_CONTENT)
+    if delete_product.first() == None:
+        raise HTTPException(status_code=404, detail=f'Product with ID {id} not found.')
+    else:
+        delete_product.delete(synchronize_session = False)
+        db.commit()
+        Response(status_code=status.HTTP_204_NO_CONTENT)
