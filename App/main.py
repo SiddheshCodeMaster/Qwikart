@@ -5,12 +5,13 @@ import json
 from typing import Optional
 import time
 
+from . import schemas
+
 from fastapi import FastAPI, Query, Request, Response, status,HTTPException, Depends 
 from contextlib import asynccontextmanager
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from pydantic import BaseModel, conint
 from sqlalchemy.orm import Session
 
 import psycopg2
@@ -37,82 +38,19 @@ while True:
         print("Error connecting to database: ", err)
         time.sleep(5)
 
-# -----------------------------
-# Defining PostgreSQL BIGINT range
-# -----------------------------
-
-BigInt = conint(ge=-9223372036854775808, le=9223372036854775807)
-
-# -----------------------------
-# Load products JSON once at startup
-# -----------------------------
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # Startup: Load products
-    file_path = 'dataset/items.json'
-    try:
-        with open(file_path, 'r') as file:
-            app.state.products = json.load(file)
-    except (FileNotFoundError, json.JSONDecodeError):
-        app.state.products = {}
-    yield 
-
-# -----------------------------
-# Define data models using Pydantic
-# -----------------------------
-class Product(BaseModel):
-    name: str
-    price: float
-    description: str
-    quantity: int
-    is_available: bool
-    category: str
-    location_name: Optional[str] = None
-
-class Users(BaseModel):
-    id: Optional[int]
-    username: str
-    lastname: str
-    email: str
-    age: int
-    gender: str
-    password: str
-    user_created_at: Optional[datetime] = None
-    user_updated_at: Optional[datetime] = None
-
-class Admin(BaseModel):
-    id: Optional[int]
-    admin_username: str
-    admin_password: str
-
-class Api_transactions(BaseModel):
-    id: BigInt
-    username: str
-    req_string: str
-    res_String: str
-    status: str
-    err_code: Optional[int] = None
-    err_msg: Optional[str] = None
-    api_hit_id: BigInt
-
-class Fullfilled_orders(BaseModel):
-    api_transaction_id: BigInt
-    order_status: str
-    order_fullfilled: bool   
-
-
-class History_Orders(BaseModel):
-    api_transaction_id: BigInt 
-    order_status: str
-    order_created_at: Optional[datetime] = None
-    order_fulfillment_info: Fullfilled_orders
-
-class Location_information(BaseModel):
-    location: str
-    city: str
-    state: str
-    pincode: str
-    country: str
+# # -----------------------------
+# # Load products JSON once at startup
+# # -----------------------------
+# @asynccontextmanager
+# async def lifespan(app: FastAPI):
+#     # Startup: Load products
+#     file_path = 'dataset/items.json'
+#     try:
+#         with open(file_path, 'r') as file:
+#             app.state.products = json.load(file)
+#     except (FileNotFoundError, json.JSONDecodeError):
+#         app.state.products = {}
+#     yield 
 
 # -----------------------------
 # Static & Template Setup
@@ -120,72 +58,18 @@ class Location_information(BaseModel):
 
 models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI(lifespan=lifespan)
-templates = Jinja2Templates(directory="dynamic/templates")
-app.mount("/dynamic", StaticFiles(directory="dynamic"), name="dynamic")
-# app.mount("/dynamic/product_images", StaticFiles(directory="product_images"), name="product_images")
-
-# -----------------------------
-# Page Endpoints
-# -----------------------------
-    
-@app.get("/welcomeQwikart", response_class=HTMLResponse)
-def root():
-    file_path = os.path.join("dynamic/templates", "welcome.html")
-    with open(file_path, "r") as file:
-        html_content = file.read()
-    return HTMLResponse(content=html_content)
-
-@app.get("/explore", response_class=HTMLResponse)
-def explore():
-    file_path = os.path.join("dynamic/templates", "explore.html")
-    with open(file_path, "r") as file:
-        html_content = file.read()
-    return HTMLResponse(content=html_content)
-
-@app.get("/consultation-form", response_class=HTMLResponse)
-async def consultation_form(request: Request):
-    return templates.TemplateResponse("consultation-form.html", {"request": request})
-
-# -----------------------------
-# Consultation Form Submission
-# -----------------------------
-@app.post("/submit-consultation", status_code=status.HTTP_201_CREATED)
-async def submit_consultation(request: Request):
-    data = await request.json()
-    new_id = randrange(0, 100000)
-    entry = {
-        "id": new_id,
-        "FULL NAME": data.get("name"),
-        "PHONE NUMBER": data.get("phone"),
-        "EMAIL": data.get("email")
-    }
-    file_path = "dataset/contact-invitations.json"
-    print("Writing to:", os.path.abspath(file_path))
-    print("Entry:", entry)
-    if os.path.exists(file_path):
-        with open(file_path, "r") as f:
-            try:
-                invitations = json.load(f)
-            except (FileNotFoundError, json.JSONDecodeError):
-                invitations = []
-    else:
-        invitations = []
-    invitations.append(entry)
-    with open(file_path, "w") as f:
-        json.dump(invitations, f, indent=4)
-    return JSONResponse(content={"message": "Consultation submitted successfully"})
+app = FastAPI()
 
 # -----------------------------
 # Product Endpoints (User)
 # -----------------------------
 
-@app.get("/Products")
+@app.get("/Products", response_model= list[schemas.GetProduct])
 def get_products(db: Session = Depends(get_db)):
     products = db.query(models.Product).all()
     return products
 
-@app.get("/Products/{id}")
+@app.get("/Products/{id}", response_model= schemas.GetProduct)
 def get_product(id: int, db: Session = Depends(get_db)):
     get_product = db.query(models.Product).filter(models.Product.id == id).first()
     if not get_product:
@@ -197,41 +81,27 @@ def get_product(id: int, db: Session = Depends(get_db)):
 # Product Endpoints (Admin)
 # -----------------------------
 
-@app.post("/Products", status_code=status.HTTP_201_CREATED)
-def create_products(new_product: Product, db: Session = Depends(get_db)):
+@app.post("/Products", status_code=status.HTTP_201_CREATED, response_model= schemas.GetProduct)
+def create_products(new_product: schemas.CreateProduct, db: Session = Depends(get_db)):
     
     create_product = models.Product(**new_product.dict())
     db.add(create_product)
     db.commit()
     db.refresh(create_product)
-    return {"data": create_product}
+    return create_product
 
 @app.put("/Products/{id}", status_code=status.HTTP_200_OK)
-def update_product(id: int, updated_product: Product,  db: Session = Depends(get_db)):
-    # cursor.execute("UPDATE products SET name=%s, price=%s, description=%s, quantity=%s, category=%s, is_available=%s WHERE id=%s RETURNING *",
-    #                (updated_product.product_name,
-    #                 updated_product.information.Price,
-    #                 updated_product.information.Description,
-    #                 updated_product.information.Quantity,
-    #                 updated_product.information.category,
-    #                 updated_product.information.is_available,
-    #                 str(id)))
-    
-    # updated_data = cursor.fetchone()
-    # conn.commit()
-    # if updated_data == None: 
-    #     raise HTTPException(status_code=404, detail=f"Product with ID {id} not found.")
-    # return {"data": updated_data}
+def update_product(id: int, updated_product: schemas.UpdateProduct,  db: Session = Depends(get_db)):
 
     update_product = db.query(models.Product).filter(models.Product.id == id)
 
     if update_product.first() == None:
-        raise HTTPException(status_code=404, detail=f"Product with ID {id} not found.")
+        raise HTTPException (status_code=404, detail=f"Product with ID {id} not found.")
     else:
         update_product.update(updated_product.dict(),synchronize_session = False)
         db.commit()
 
-        return {"data":update_product.first()}
+        return update_product.first()
         
 @app.delete("/Products/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_product(id: int, db: Session = Depends(get_db)):
