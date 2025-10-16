@@ -1,23 +1,15 @@
-from random import randrange
-from datetime import datetime
-import os
-import json
-from typing import Optional
+from typing import List
 import time
 
 from . import schemas
 
-from fastapi import FastAPI, Query, Request, Response, status,HTTPException, Depends 
-from contextlib import asynccontextmanager
-from fastapi.responses import HTMLResponse, JSONResponse
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
+from fastapi import FastAPI, Response, status,HTTPException, Depends 
 from sqlalchemy.orm import Session
 
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
-from . import models
+from . import models, utils
 from .database import engine,get_db
 
 # -----------------------------
@@ -38,20 +30,6 @@ while True:
         print("Error connecting to database: ", err)
         time.sleep(5)
 
-# # -----------------------------
-# # Load products JSON once at startup
-# # -----------------------------
-# @asynccontextmanager
-# async def lifespan(app: FastAPI):
-#     # Startup: Load products
-#     file_path = 'dataset/items.json'
-#     try:
-#         with open(file_path, 'r') as file:
-#             app.state.products = json.load(file)
-#     except (FileNotFoundError, json.JSONDecodeError):
-#         app.state.products = {}
-#     yield 
-
 # -----------------------------
 # Static & Template Setup
 # -----------------------------
@@ -64,7 +42,7 @@ app = FastAPI()
 # Product Endpoints (User)
 # -----------------------------
 
-@app.get("/Products", response_model= list[schemas.GetProduct])
+@app.get("/Products", response_model= List[schemas.GetProduct])
 def get_products(db: Session = Depends(get_db)):
     products = db.query(models.Product).all()
     return products
@@ -76,6 +54,29 @@ def get_product(id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail=f"Product with ID {id} not found.")
     else:
         return get_product
+
+@app.post("/createUser", status_code=status.HTTP_201_CREATED, response_model= schemas.userOut)
+def create_user(user: schemas.CreateUser, db: Session = Depends(get_db)):
+    new_user = models.Users(**user.dict())
+    
+    # # Hasing the password --> user.password
+    
+    if len(new_user.password.encode('utf-8')) > 72:
+        raise HTTPException(status_code=400, detail=f"Password cannot be greater than 16 characters")
+    else:
+        new_user.password = utils.hash_password(new_user.password)
+        db.add(new_user)
+        db.commit()
+        db.refresh(new_user)
+        return new_user
+
+@app.get("/getUser/{id}", response_model= schemas.userOut)
+def get_user(id: int, db: Session = Depends(get_db)):
+    fetched_user = db.query(models.Users).filter(models.Users.id == id).first()
+    if not fetched_user:
+        raise HTTPException(status_code=404, detail=f"User with ID {id} not found.")
+    else:
+        return fetched_user
 
 # -----------------------------
 # Product Endpoints (Admin)

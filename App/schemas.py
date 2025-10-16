@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel,conint
+from pydantic import BaseModel,conint,EmailStr
 
 # -----------------------------
 # Define data models using Pydantic
@@ -56,16 +56,28 @@ class UpdateProduct(BaseModel):
 # For All User Related Endpoints
 # -----------------------------
 
-class Users(BaseModel):
-    id: Optional[int]
+class CreateUser(BaseModel):
+    firstname: str
     username: str
     lastname: str
-    email: str
+    email: EmailStr
     age: int
     gender: str
     password: str
+    is_admin: Optional[bool] = False
+    location_name: Optional[str] = None
     user_created_at: Optional[datetime] = None
     user_updated_at: Optional[datetime] = None
+
+class userOut(BaseModel):
+    username: str
+    email: EmailStr
+    is_admin: bool
+    location_name: str
+
+    class Config:
+        orm_mode = True
+        
 
 # -----------------------------
 # For Admin Endpoints
