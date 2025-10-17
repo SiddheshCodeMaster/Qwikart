@@ -4,7 +4,9 @@ from sqlalchemy.orm import Session
 from App import models, schemas, utils
 from App.database import get_db
 
-router = APIRouter()
+router = APIRouter(
+    tags=["Users"]
+)
 
 # -----------------------------
 # User Endpoints (End Users side, Admin)

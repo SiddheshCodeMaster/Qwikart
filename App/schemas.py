@@ -98,6 +98,11 @@ class Api_transactions(BaseModel):
     err_msg: Optional[str] = None
     api_hit_id: BigInt
 
+class UserLogin(BaseModel):
+    username: str
+    password: str
+    email: EmailStr
+
 # -----------------------------
 # For All  Related Endpoints
 # -----------------------------    

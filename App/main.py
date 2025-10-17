@@ -6,7 +6,7 @@ from psycopg2.extras import RealDictCursor
 from . import models
 from .database import engine
 
-from .routers import products, users
+from .routers import products, users, auth
 
 # -----------------------------
 # Establishing Database Connection
@@ -40,5 +40,5 @@ app = FastAPI()
 
 app.include_router(products.router)
 app.include_router(users.router)
-
+app.include_router(auth.router)
 
