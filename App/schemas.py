@@ -125,3 +125,14 @@ class Location_information(BaseModel):
     state: str
     pincode: str
     country: str
+
+# -----------------------------
+# For all Login related Endpoints
+# -----------------------------    
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    username: str

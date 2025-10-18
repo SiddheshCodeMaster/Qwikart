@@ -2,7 +2,7 @@ from typing import List
 from fastapi import Response, status,HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
 
-from App import models, schemas
+from App import models, schemas, oauth2
 from App.database import get_db
 
 router = APIRouter(
@@ -31,13 +31,16 @@ def get_product(id: int, db: Session = Depends(get_db)):
 # -----------------------------
 
 @router.post("/Products", status_code=status.HTTP_201_CREATED, response_model= schemas.GetProduct)
-def create_products(new_product: schemas.CreateProduct, db: Session = Depends(get_db)):
+def create_products(new_product: schemas.CreateProduct, db: Session = Depends(get_db),current_user: schemas.TokenData = Depends(oauth2.get_current_user)):
     
-    create_product = models.Product(**new_product.dict())
-    db.add(create_product)
-    db.commit()
-    db.refresh(create_product)
-    return create_product
+    if not current_user:
+        raise HTTPException(status_code=403, detail="Not Authorized to perform the action.")
+    else:
+        create_product = models.Product(**new_product.dict())
+        db.add(create_product)
+        db.commit()
+        db.refresh(create_product)
+        return create_product
 
 @router.put("/Products/{id}", status_code=status.HTTP_200_OK)
 def update_product(id: int, updated_product: schemas.UpdateProduct,  db: Session = Depends(get_db)):
