@@ -14,17 +14,25 @@ router = APIRouter(
 # -----------------------------
 
 @router.get("/Products", response_model= List[schemas.GetProduct])
-def get_products(db: Session = Depends(get_db)):
-    products = db.query(models.Product).all()
-    return products
+def get_products(db: Session = Depends(get_db), current_user: schemas.TokenData = Depends(oauth2.get_current_user)):
+    
+    if not current_user:
+        raise HTTPException(status_code=403, detail="Not Authorized to perform the action.")
+    else:
+        products = db.query(models.Product).all()
+        return products
 
 @router.get("/Products/{id}", response_model= schemas.GetProduct)
-def get_product(id: int, db: Session = Depends(get_db)):
-    get_product = db.query(models.Product).filter(models.Product.id == id).first()
-    if not get_product:
-        raise HTTPException(status_code=404, detail=f"Product with ID {id} not found.")
+def get_product(id: int, db: Session = Depends(get_db), current_user: schemas.TokenData = Depends(oauth2.get_current_user)):
+    
+    if not current_user:
+        raise HTTPException(status_code=403, detail="Not Authorized to perform the action.")
     else:
-        return get_product
+        get_product = db.query(models.Product).filter(models.Product.id == id).first()
+        if not get_product:
+            raise HTTPException(status_code=404, detail=f"Product with ID {id} not found.")
+        else:
+            return get_product
     
 # -----------------------------
 # Product Endpoints (Admin)
@@ -43,26 +51,37 @@ def create_products(new_product: schemas.CreateProduct, db: Session = Depends(ge
         return create_product
 
 @router.put("/Products/{id}", status_code=status.HTTP_200_OK)
-def update_product(id: int, updated_product: schemas.UpdateProduct,  db: Session = Depends(get_db)):
+def update_product(id: int, updated_product: schemas.UpdateProduct,  db: Session = Depends(get_db), current_user: schemas.TokenData = Depends(oauth2.get_current_user)):
 
-    update_product = db.query(models.Product).filter(models.Product.id == id)
+    if not current_user:
+        raise HTTPException(status_code=403, detail="Not Authorized to perform the action.")
+    else: 
+        if current_user.is_admin == False:
+            raise HTTPException(status_code=403, detail="Admin Privileges Required to perform the action.")
+        else:
+            update_product = db.query(models.Product).filter(models.Product.id == id)
 
-    if update_product.first() == None:
-        raise HTTPException (status_code=404, detail=f"Product with ID {id} not found.")
-    else:
-        update_product.update(updated_product.dict(),synchronize_session = False)
-        db.commit()
-
-        return update_product.first()
-        
+            if update_product.first() == None:
+                raise HTTPException (status_code=404, detail=f"Product with ID {id} not found.")
+            else:
+                update_product.update(updated_product.dict(),synchronize_session = False)
+                db.commit()
+                return update_product.first()
+            
 @router.delete("/Products/{id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_product(id: int, db: Session = Depends(get_db)):
+def delete_product(id: int, db: Session = Depends(get_db), current_user: schemas.TokenData = Depends(oauth2.get_current_user)):
 
-    delete_product = db.query(models.Product).filter(models.Product.id == id)
-
-    if delete_product.first() == None:
-        raise HTTPException(status_code=404, detail=f'Product with ID {id} not found.')
+    if not current_user:
+        raise HTTPException(status_code=403, detail="Not Authorized to perform the action.")
     else:
-        delete_product.delete(synchronize_session = False)
-        db.commit()
-        Response(status_code=status.HTTP_204_NO_CONTENT)
+        if current_user.is_admin == False:
+            raise HTTPException(status_code=403, detail="Admin Privileges Required to perform the action.")
+        else:
+            delete_product = db.query(models.Product).filter(models.Product.id == id)
+
+            if delete_product.first() == None:
+                raise HTTPException(status_code=404, detail=f'Product with ID {id} not found.')
+            else:
+                delete_product.delete(synchronize_session = False)
+                db.commit()
+                return Response(status_code=status.HTTP_204_NO_CONTENT)
