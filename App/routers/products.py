@@ -1,6 +1,8 @@
 from typing import List
 from fastapi import Response, status,HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
+from sqlalchemy import func, or_ 
+import re
 
 from App import models, schemas, oauth2
 from App.database import get_db
@@ -27,12 +29,40 @@ def get_product(id: int, db: Session = Depends(get_db), current_user: schemas.To
     
     if not current_user:
         raise HTTPException(status_code=403, detail="Not Authorized to perform the action.")
-    else:
+    else:   
         get_product = db.query(models.Product).filter(models.Product.id == id).first()
         if not get_product:
             raise HTTPException(status_code=404, detail=f"Product with ID {id} not found.")
         else:
             return get_product
+        
+@router.get("/Products/category/{category}", response_model= List[schemas.GetProduct])
+def get_products_by_category(category: str, db: Session = Depends(get_db), current_user: schemas.TokenData = Depends(oauth2.get_current_user)):
+    
+    if not current_user:
+        raise HTTPException(status_code=403, detail="Not Authorized to perform the action.")
+    else:
+        # Normalizing incoming category string
+        raw = (category or "").strip()
+        norm = re.sub(r'[^A-Za-z0-9]+', '', raw).lower()
+
+        # Pattern for simple startswith, case-insensitive match
+        pattern = f"{raw}%"
+
+        # Normalized comparison via PostgreSQL reex replace to handle differences
+        # ex: "Men's" vs "Mens"
+
+        try: 
+            products = db.query(models.Product).filter(
+                or_(
+                    models.Product.category.ilike(pattern),
+                    func.lower(func.regexp_replace(models.Product.category, '[^a-z0-9]', '', 'gi')).like(f"{norm}%")
+                )
+            ).all()
+        except Exception:
+            products = db.query(models.Product).filter(models.Product.category.ilike(pattern)).all()
+        
+        return products
     
 # -----------------------------
 # Product Endpoints (Admin)
