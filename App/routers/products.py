@@ -114,7 +114,44 @@ def get_products_by_description(description: str, db: Session = Depends(get_db),
             ).all()
         except Exception:
             products = db.query(models.Product).filter(models.Product.description.ilike(pattern)).all()
-        return products    
+        return products  
+
+@router.get("/Products/location/{location}", response_model= List[schemas.GetProduct])
+def get_products_by_location(location: str, db: Session = Depends(get_db), current_user: schemas.TokenData = Depends(oauth2.get_current_user)):
+    
+    if not current_user:
+        raise HTTPException(status_code=403, detail="Not Authorized to perform the action.")
+    else:
+        # Normalizing incoming location string
+        raw = (location or "").strip()
+        norm = re.sub(r'[^A-Za-z0-9]+', '', raw).lower()
+
+        # Pattern for simple startswith, case-insensitive match
+        pattern = f"{raw}%"
+
+        # Normalized comparison via PostgreSQL reex replace to handle differences
+        # ex: "New York" vs "NewYork"
+
+        try: 
+            products = db.query(models.Product).filter(
+                or_(
+                    models.Product.location.ilike(pattern),
+                    func.lower(func.regexp_replace(models.Product.location, '[^a-z0-9]', '', 'gi')).like(f"{norm}%")
+                )
+            ).all()
+        except Exception:
+            products = db.query(models.Product).filter(models.Product.location.ilike(pattern)).all()
+        
+        return products
+
+@router.get("/Products/price_range/{min_price}/{max_price}", response_model= List[schemas.GetProduct])
+def get_products_by_price_range(min_price: float, max_price: float, db: Session = Depends(get_db), current_user: schemas.TokenData = Depends(oauth2.get_current_user)):
+    
+    if not current_user:
+        raise HTTPException(status_code=403, detail="Not Authorized to perform the action.")
+    else:
+        products = db.query(models.Product).filter(models.Product.price >= min_price, models.Product.price <= max_price).all()
+        return products  
     
 # -----------------------------
 # Product Endpoints (Admin)
