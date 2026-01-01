@@ -103,7 +103,7 @@ def get_products_by_description(description: str, db: Session = Depends(get_db),
         # Pattern for simple contains, case-insensitive match
         pattern = f"%{raw}%"
 
-        # Normalized comparison via PostgreSQL reex replace to handle differences
+        # Normalized comparison via PostgreSQL regex replace to handle differences
 
         try:
             products = db.query(models.Product).filter(
@@ -129,7 +129,7 @@ def get_products_by_location(location: str, db: Session = Depends(get_db), curre
         # Pattern for simple startswith, case-insensitive match
         pattern = f"{raw}%"
 
-        # Normalized comparison via PostgreSQL reex replace to handle differences
+        # Normalized comparison via PostgreSQL regex replace to handle differences
         # ex: "New York" vs "NewYork"
 
         try: 
@@ -163,7 +163,7 @@ def create_products(new_product: schemas.CreateProduct, db: Session = Depends(ge
     if not current_user:
         raise HTTPException(status_code=403, detail="Not Authorized to perform the action.")
     else:
-        create_product = models.Product(**new_product.dict())
+        create_product = models.Product(**new_product.dict(), supplier_id = current_user.id)
         db.add(create_product)
         db.commit()
         db.refresh(create_product)
@@ -178,7 +178,7 @@ def update_product(id: int, updated_product: schemas.UpdateProduct,  db: Session
         if current_user.is_admin == False:
             raise HTTPException(status_code=403, detail="Admin Privileges Required to perform the action.")
         else:
-            update_product = db.query(models.Product).filter(models.Product.id == id)
+            update_product = db.query(models.Product).filter(models.Product.id == id, models.Product.supplier_id == current_user.id)
 
             if update_product.first() == None:
                 raise HTTPException (status_code=404, detail=f"Product with ID {id} not found.")

@@ -1,5 +1,5 @@
 from .database import Base
-from sqlalchemy import Column, Integer, String, Float, Boolean, TIMESTAMP,text
+from sqlalchemy import Column, Integer, String, Float, Boolean, TIMESTAMP,text, ForeignKey
 from datetime import datetime
 
 class Product(Base):
@@ -16,6 +16,9 @@ class Product(Base):
     updated_at = Column(TIMESTAMP(timezone=True), 
                         nullable=True, onupdate= text('now()'))
     location_name = Column(String, nullable=False)
+    supplier_id = Column(Integer, ForeignKey(
+        "users.id", ondelete="CASCADE"), nullable=False
+    )
 
 class Users(Base):
     __tablename__ = 'users'
