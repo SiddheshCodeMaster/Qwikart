@@ -25,9 +25,10 @@ def verify_access_token(token: str, credentials_exception):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username = payload.get("username")
+        id = payload.get("id")
         if username is None:
             raise credentials_exception
-        token_data = TokenData(username=str(username))
+        token_data = TokenData(username=str(username), id=int(id))
     except JWTError:
         raise credentials_exception
     return token_data
@@ -45,7 +46,8 @@ def get_current_user(
     token_data = verify_access_token(token, credentials_exception)
 
     user = db.query(models.Users).filter(
-        models.Users.username == token_data.username
+        models.Users.username == token_data.username, 
+        models.Users.id == token_data.id
     ).first()
 
     if not user:

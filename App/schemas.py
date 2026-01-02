@@ -136,3 +136,4 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     username: str
+    id: int

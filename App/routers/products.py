@@ -180,6 +180,10 @@ def update_product(id: int, updated_product: schemas.UpdateProduct,  db: Session
         else:
             update_product = db.query(models.Product).filter(models.Product.id == id, models.Product.supplier_id == current_user.id)
 
+            if update_product.supplier_id != current_user.id:
+                raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                                    detail = "Not Authorized to perform requested action")
+
             if update_product.first() == None:
                 raise HTTPException (status_code=404, detail=f"Product with ID {id} not found.")
             else:
@@ -197,6 +201,10 @@ def delete_product(id: int, db: Session = Depends(get_db), current_user: schemas
             raise HTTPException(status_code=403, detail="Admin Privileges Required to perform the action.")
         else:
             delete_product = db.query(models.Product).filter(models.Product.id == id)
+
+            if delete_product.supplier_id != current_user.id:
+                raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                                    detail = "Not Authorized to perform requested action")
 
             if delete_product.first() == None:
                 raise HTTPException(status_code=404, detail=f'Product with ID {id} not found.')
