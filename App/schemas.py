@@ -25,12 +25,22 @@ class Product(BaseModel):
     category: str
     location_name: Optional[str] = None
 
+class userOut(BaseModel):
+    username: str
+    email: EmailStr
+    is_admin: bool
+    location_name: str
+
+    class Config:
+        orm_mode = True
+
 class GetProduct(BaseModel):
     name: str
     price: float
     description: str
     quantity: int   
     category: str
+    owner: userOut
 
     class Config:
         orm_mode = True
@@ -67,17 +77,7 @@ class CreateUser(BaseModel):
     is_admin: Optional[bool] = False
     location_name: Optional[str] = None
     user_created_at: Optional[datetime] = None
-    user_updated_at: Optional[datetime] = None
-
-class userOut(BaseModel):
-    username: str
-    email: EmailStr
-    is_admin: bool
-    location_name: str
-
-    class Config:
-        orm_mode = True
-        
+    user_updated_at: Optional[datetime] = None        
 
 # -----------------------------
 # For Admin Endpoints

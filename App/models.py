@@ -1,5 +1,6 @@
 from .database import Base
 from sqlalchemy import Column, Integer, String, Float, Boolean, TIMESTAMP,text, ForeignKey
+from sqlalchemy.orm import relationship
 from datetime import datetime
 
 class Product(Base):
@@ -19,6 +20,7 @@ class Product(Base):
     supplier_id = Column(Integer, ForeignKey(
         "users.id", ondelete="CASCADE"), nullable=False
     )
+    owner = relationship("Users")
 
 class Users(Base):
     __tablename__ = 'users'
