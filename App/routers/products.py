@@ -16,12 +16,12 @@ router = APIRouter(
 # -----------------------------
 
 @router.get("/Products", response_model= List[schemas.GetProduct])
-def get_products(db: Session = Depends(get_db), current_user: schemas.TokenData = Depends(oauth2.get_current_user)):
-    
+def get_products(db: Session = Depends(get_db), current_user: schemas.TokenData = Depends(oauth2.get_current_user),
+                 limit: int = 10): # Limit > Allows end-user to check the number of products they want to see after their custom search:
     if not current_user:
         raise HTTPException(status_code=403, detail="Not Authorized to perform the action.")
     else:
-        products = db.query(models.Product).all()
+        products = db.query(models.Product).limit(limit).all()
         return products
 
 @router.get("/Products/{id}", response_model= schemas.GetProduct)
@@ -35,7 +35,7 @@ def get_product(id: int, db: Session = Depends(get_db), current_user: schemas.To
             raise HTTPException(status_code=404, detail=f"Product with ID {id} not found.")
         else:
             return get_product
-        
+                
 @router.get("/Products/search/{name}", response_model= List[schemas.GetProduct])
 def search_products_by_name(name: str, db: Session = Depends(get_db), current_user: schemas.TokenData = Depends(oauth2.get_current_user)):
     
